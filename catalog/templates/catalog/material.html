@@ -1,0 +1,64 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+{% block title %}{{ entry.title }} · Атлас ароматов{% endblock %}
+{% block content %}
+<p class="breadcrumb"><a href="{% url 'search' %}?kind={{ entry.kind }}">Поиск</a><span aria-hidden="true">/</span>{{ entry.get_kind_display }}</p>
+<article class="detail material-detail">
+    <header>
+        <p class="label">{{ entry.get_kind_display }}{% if entry.published_on %} · {{ entry.published_on|date:"d.m.Y" }}{% endif %}</p>
+        <h1>{{ entry.title }}</h1>
+        <p class="intro">{% if editorial %}{{ editorial.lead }}{% else %}{{ entry.description }}{% endif %}</p>
+        {% if article_video %}<p><a href="#article-video">Перейти к видео в статье</a></p>{% endif %}
+    </header>
+    {% if video_url %}
+    {% include "catalog/youtube_player.html" with embed_url=video_url video_title=entry.title only %}
+    {% endif %}
+    {% if editorial %}
+    <figure class="material-figure">
+        <img src="{% static editorial.image.path %}" width="1200" height="800" alt="{{ editorial.image.alt }}">
+        <figcaption>{{ editorial.image.caption }}</figcaption>
+    </figure>
+    <div class="article-body">
+        {% for section in editorial.sections %}
+        <section>
+            <h2>{{ section.heading }}</h2>
+            {% for paragraph in section.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}
+            {% if section.links %}
+            <ul class="article-links">
+                {% for link in section.links %}
+                <li>{% if link.url %}<a href="{{ link.url }}">{{ link.label }}</a>{% else %}{{ link.label }}{% endif %}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+        {% endfor %}
+    </div>
+    {% if article_video %}
+    <section class="article-video" id="article-video" aria-labelledby="article-video-heading">
+        <h2 id="article-video-heading">{{ article_video.title }}</h2>
+        <p>{{ article_video.description }}</p>
+        {% if article_video_url %}
+        {% include "catalog/youtube_player.html" with embed_url=article_video_url video_title=article_video.title only %}
+        {% endif %}
+        <p><a href="{{ article_video.source_url }}">Смотреть оригинал на YouTube</a></p>
+    </section>
+    {% endif %}
+    <section class="article-sources">
+        <h2>Источники и примеры</h2>
+        <ul>
+            {% for source in editorial.sources %}<li><a href="{{ source.url }}">{{ source.label }}</a></li>{% endfor %}
+        </ul>
+    </section>
+    {% elif entry.body %}
+    <div class="article-body">{{ entry.body|linebreaks }}</div>
+    {% endif %}
+    {% if entry.notes.all or entry.families.all %}
+    <h2>Темы</h2>
+    <ul class="chips">
+        {% for note in entry.notes.all %}<li><a class="chip" href="{% url 'selection' %}?note={{ note.pk }}">{{ note.name }}</a></li>{% endfor %}
+        {% for family in entry.families.all %}<li><a class="chip" href="{% url 'catalog' %}?family={{ family.pk }}">{{ family.name }} семейство</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% include "catalog/source.html" %}
+</article>
+{% endblock %}

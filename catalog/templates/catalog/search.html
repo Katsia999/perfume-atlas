@@ -1,0 +1,106 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}Поиск · Атлас ароматов{% endblock %}
+{% block content %}
+<header class="page-heading">
+    <h1>Поиск по Атласу</h1>
+    <p class="intro">Ароматы, статьи, видео и новости парфюмерии.</p>
+</header>
+{% include "catalog/search_form.html" %}
+
+{% if form.errors %}
+<p class="notice">Проверьте запрос и выбранный тип результата.</p>
+{% elif response %}
+    {% if response.effective_query != query %}
+    <p class="notice">Ищем по исправленному запросу: <strong>{{ response.effective_query }}</strong>.
+        <a href="{% querystring original='1' %}">Искать «{{ query }}» без исправления</a>
+    </p>
+    {% elif original and query %}
+    <p class="notice">Ищем по исходному запросу. <a href="{% querystring original=None %}">Применить исправления</a></p>
+    {% endif %}
+
+    {% if response.since %}
+    <p class="notice">Новости за последние 30 дней ({{ response.since|date:"d.m.Y" }} – {{ response.until|date:"d.m.Y" }}).
+        Учитывается дата публикации в источнике.</p>
+    {% endif %}
+    {% if response.groups or response.excluded or response.unrestricted_filters %}
+    <div class="notice">
+        {% for group in response.groups %}
+            {% if group|length == 1 %}
+            <p><strong>Нужно</strong> — {{ group.0|join:" и " }}.</p>
+            {% else %}
+            <p><strong>Подходит любой вариант</strong></p>
+            <ul>
+                {% for branch in group %}
+                <li>{{ branch|join:" и " }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endfor %}
+        {% if response.excluded %}<p><strong>Общий запрет</strong> — {{ response.excluded|join:", " }}.</p>{% endif %}
+        {% if response.unrestricted_filters %}<p><strong>Без ограничений</strong> — {{ response.unrestricted_filters|join:", " }}.</p>{% endif %}
+        {% if response.groups or response.excluded %}
+        <p>Условия проверяются по опубликованным данным каждой версии. Эти данные могут не описывать полный состав формулы.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if response.results %}
+    <h2 class="results-heading">{% if query %}Результаты{% else %}Все статьи{% endif %} <span class="count">{{ response.results|length }}</span></h2>
+    <ul class="results">
+        {% for result in response.results %}
+        <li class="card">
+            <p class="label">{{ result.label }}{% if result.entry.published_on %} · {{ result.entry.published_on|date:"d.m.Y" }}{% endif %}</p>
+            <h3>
+                {% if result.kind == "fragrance" %}
+                <a href="{% url 'fragrance-detail' result.entry.pk %}">{{ result.title }}</a>
+                {% else %}
+                <a href="{% url 'material-detail' result.entry.pk %}">{{ result.title }}</a>
+                {% endif %}
+            </h3>
+            <p>{{ result.entry.description|truncatewords:40 }}</p>
+            {% if result.matches %}<p><strong>Совпало:</strong> {{ result.matches|join:" · " }}</p>{% endif %}
+            {% if result.wear_match %}<p><a href="{% url 'fragrance-detail' result.entry.pk %}#when-to-wear">Обоснование подбора<span class="visually-hidden"> для {{ result.title }}</span></a></p>{% endif %}
+            <p class="source"><a href="{{ result.entry.source_url }}">Источник<span class="visually-hidden"> для {{ result.title }}</span></a></p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty-state panel"><h2>Совпадений нет</h2>
+        {% if response.unsupported_slash %}
+        <p>Попробуйте каждый вариант отдельным запросом.</p>
+        {% elif response.unsupported_brackets %}
+        <p>Поиск по свойствам поддерживает «и» и «или» без скобок. Укажите свойства каждого варианта через «и», а сами варианты разделите словом «или».</p>
+        {% elif response.ambiguous_alternative %}
+        <p>Упростите условие с «или». Положительные варианты перечислите перед общим запретом «но без». Если запрет нужен только для одного варианта, отправьте два запроса.</p>
+        {% elif response.unsupported_filters %}
+        <p>По данным каталога нельзя проверить {{ response.unsupported_filters|join:", " }}. Попробуйте поиск по нотам, характеру, бренду или концентрации.</p>
+        {% elif response.unknown == "или" %}
+        <p>Укажите оба варианта с «или», например «ваниль или сандал».</p>
+        {% elif response.unknown %}
+        <p>Не удалось распознать условие «{{ response.unknown }}». Уточните его, например «без мускуса» или «с лёгким шлейфом».</p>
+        {% elif response.contradiction %}
+        <p>Одно и то же свойство требуется и исключается: {{ response.contradiction|join:", " }}.</p>
+        {% elif response.incompatible_kind %}
+        <p>Условия применяются к версиям ароматов. Чтобы проверить их, выберите тип «Ароматы» или «Все типы».</p>
+        {% elif response.since %}
+        <p>Подходящих публикаций за этот период нет. Уберите ограничение по времени, чтобы найти более ранние новости.</p>
+        {% elif response.groups or response.excluded %}
+        <p>Среди опубликованных версий нет подходящей по всем условиям.</p>
+        {% if response.missing_performance %}
+        <p>Для части версий нет официальных данных, по которым можно проверить заданную стойкость или шлейф.</p>
+        {% endif %}
+        {% if response.missing_wear %}
+        <p>Для части версий недостаточно сведений, чтобы проверить заданный сезон, время суток или лёгкость звучания.</p>
+        {% endif %}
+        {% else %}
+        <p>Попробуйте название бренда или ноты. Если выбран тип, проверьте запрос по всем типам.</p>
+        {% endif %}
+    </div>
+    {% include "catalog/examples.html" %}
+    {% endif %}
+{% else %}
+<p class="notice">Введите слово, словосочетание или вопрос.</p>
+{% include "catalog/examples.html" %}
+{% endif %}
+{% endblock %}

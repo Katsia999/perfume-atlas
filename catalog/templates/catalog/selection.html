@@ -1,0 +1,57 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+{% block title %}Подбор по нотам · Атлас ароматов{% endblock %}
+{% block content %}
+<header class="page-heading">
+    <h1>Подбор по нотам</h1>
+    <p class="intro">Выберите любимые ноты. Ароматы с наибольшим числом совпадений появятся первыми.</p>
+</header>
+<div class="selection-layout">
+    <form method="get" class="picker panel" aria-label="Выбор нот">
+        <fieldset>
+            <legend>Выберите ноты</legend>
+            {{ form.note.errors }}
+            {% include "catalog/note_choices.html" with options=featured %}
+            {% if other %}
+            <details{% if other_open %} open{% endif %}>
+                <summary>Все остальные ноты</summary>
+                {% include "catalog/note_choices.html" with options=other %}
+            </details>
+            {% endif %}
+        </fieldset>
+        <div class="picker-actions">
+            <button type="submit">Подобрать</button>
+            <a href="{% url 'selection' %}">Сбросить</a>
+        </div>
+    </form>
+    <section aria-labelledby="selection-results">
+        {% if selected %}
+        <h2 id="selection-results" class="results-heading">Результаты подбора <span class="count">{{ results|length }}</span></h2>
+        <p class="selection-summary">Выбрано: {{ selected|join:", " }}</p>
+        {% if results %}
+        <ul class="results">
+            {% for entry in results %}
+            <li class="card fragrance-card">
+                <p class="label">{{ entry.brand.name }} · {{ entry.family.name }}</p>
+                <h3><a href="{% url 'fragrance-detail' entry.pk %}">{{ entry.name }}</a></h3>
+                <p class="version">{{ entry.version }}</p>
+                <p class="match"><strong>Совпадений: {{ entry.matched_notes|length }} из {{ selected|length }}</strong> · {{ entry.matched_notes|join:", " }}</p>
+                <p class="source"><a href="{{ entry.source_url }}">Источник<span class="visually-hidden"> для {{ entry }}</span></a></p>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="empty-state panel"><h3>Совпадений нет</h3><p>В опубликованных карточках этих нот пока нет. Попробуйте выбрать другие.</p></div>
+        {% endif %}
+        {% else %}
+        <div class="selection-placeholder panel">
+            <img src="{% static 'catalog/images/amber.webp' %}" alt="" width="480" height="320">
+            <div class="empty-state">
+                <h2 id="selection-results">{% if form.errors %}Проверьте выбранные ноты{% else %}Подбор пока пуст{% endif %}</h2>
+                <p>Отметьте одну или несколько нот. Например, ваниль и сандал.</p>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

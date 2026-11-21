@@ -1,0 +1,36 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Атлас ароматов{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'catalog/site.css' %}">
+</head>
+<body>
+    <a class="skip-link" href="#main">К содержанию</a>
+    {% with current=request.resolver_match.url_name %}
+    <header class="site-header">
+        <div class="wrapper header-inner">
+            <a class="brand" href="{% url 'home' %}"{% if current == 'home' %} aria-current="page"{% endif %}>
+                <span class="brand-mark" aria-hidden="true"></span>Атлас ароматов
+            </a>
+            <nav aria-label="Основная навигация">
+                <a href="{% url 'catalog' %}"{% if current == 'catalog' or current == 'fragrance-detail' %} aria-current="{% if current == 'catalog' %}page{% else %}location{% endif %}"{% endif %}>Каталог</a>
+                <a href="{% url 'selection' %}"{% if current == 'selection' %} aria-current="page"{% endif %}>Подбор по нотам</a>
+                <a href="{% url 'search' %}"{% if current == 'search' %} aria-current="page"{% endif %}>Поиск</a>
+            </nav>
+        </div>
+    </header>
+    {% endwith %}
+    <main id="main" class="wrapper">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+        <div class="wrapper footer-inner">
+            <span>Атлас ароматов · Учебная база знаний</span>
+            <a href="{% url 'admin:index' %}">Администрирование</a>
+        </div>
+    </footer>
+</body>
+</html>

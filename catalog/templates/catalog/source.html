@@ -1,0 +1,4 @@
+<section class="source-panel panel" aria-label="Источник">
+    <a href="{{ entry.source_url }}">{% if entry.kind == "video" %}Смотреть оригинал{% else %}Открыть источник{% endif %} · {{ source_host }}</a>
+    <p>Проверено {{ entry.verified_on|date:"d.m.Y" }}</p>
+</section>

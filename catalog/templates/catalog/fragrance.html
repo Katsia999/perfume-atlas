@@ -1,0 +1,149 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+{% block title %}{{ entry.name }} {{ entry.version }} · Атлас ароматов{% endblock %}
+{% block content %}
+<p class="breadcrumb"><a href="{% url 'catalog' %}">Каталог</a><span aria-hidden="true">/</span>{{ entry.brand.name }}</p>
+<article class="detail">
+    <div{% if photo or illustration %} class="detail-with-image"{% endif %}>
+        <div class="detail-copy">
+            <header>
+                <p class="label">{{ entry.brand.name }} · {{ entry.version }}</p>
+                <h1>{{ entry.name }}</h1>
+                <p class="intro">{{ entry.description }}</p>
+                <p class="family-meta">
+                    <a class="chip" href="{% url 'catalog' %}?family={{ entry.family.pk }}">{{ entry.family.name }}</a>
+                    <span>{% if entry.family_from_source %}Указано производителем{% else %}Категория каталога{% endif %}</span>
+                </p>
+            </header>
+            {% if character_labels %}
+            <section class="character" aria-labelledby="character-heading">
+                <h2 id="character-heading">Характер аромата</h2>
+                <ul class="character-labels" role="list">
+                    {% for shade in character_labels %}
+                    <li>{{ shade.label }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+        </div>
+        {% if photo or illustration %}
+        <figure class="detail-figure">
+            {% if photo %}
+                <img class="detail-product-photo" src="{{ photo.url }}" alt="Флакон {{ entry.brand.name }} {{ entry.name }}, {{ entry.version }}" width="{{ photo.width }}" height="{{ photo.height }}">
+                <figcaption>Фото производителя · {{ entry.brand.name }}</figcaption>
+            {% else %}
+                {% static 'catalog/images/'|add:illustration.0 as illustration_url %}
+                <img src="{{ illustration_url }}" alt="{{ illustration.1 }}" width="480" height="320">
+                <figcaption>Иллюстрация семейства «{{ entry.family.name }}»</figcaption>
+            {% endif %}
+        </figure>
+        {% endif %}
+    </div>
+    <section class="note-section" aria-labelledby="note-heading">
+        {% if note_groups %}
+        <h2 id="note-heading">Пирамида аромата</h2>
+        <ol class="note-pyramid" role="list">
+            {% for level, label, notes in note_groups %}
+            <li class="note-group" data-level="{{ level }}">
+                <h3>{{ label }}</h3>
+                {% include "catalog/note_links.html" %}
+            </li>
+            {% endfor %}
+        </ol>
+        {% if pyramid_source_host %}
+        <p class="pyramid-source">
+            Уровни по данным <a href="{{ entry.pyramid_source_url }}">{{ pyramid_source_host }}</a>{% if entry.pyramid_verified_on %} · проверено {{ entry.pyramid_verified_on|date:"d.m.Y" }}{% endif %}
+        </p>
+        {% endif %}
+        {% if note_groups|length < 3 %}
+        <p class="pyramid-source">Подтверждена часть уровней.</p>
+        {% endif %}
+        {% if unassigned_notes %}
+        <div class="unassigned-notes">
+            <h3>Ноты без указания уровня</h3>
+            {% include "catalog/note_links.html" with notes=unassigned_notes %}
+        </div>
+        {% endif %}
+        {% elif unassigned_notes %}
+        <h2 id="note-heading">Основные ноты</h2>
+        {% include "catalog/note_links.html" with notes=unassigned_notes %}
+        {% else %}
+        <h2 id="note-heading">Ноты аромата</h2>
+        <p>В каталоге пока нет сведений о нотах этой версии.</p>
+        {% endif %}
+        {% include "catalog/source.html" %}
+    </section>
+    {% if wear %}
+    <section class="performance" id="when-to-wear" aria-labelledby="wear-heading">
+        <h2 id="wear-heading">Когда носить</h2>
+        <p>Ориентиры для выбора. Носите аромат тогда, когда он вам нравится.</p>
+        <dl>
+            {% for fact in wear %}
+            <div class="panel" data-wear="{{ fact.kind }}">
+                <dt>{{ fact.get_kind_display }}</dt>
+                <dd>
+                    <p><strong>{{ fact.option_labels|join:", " }}</strong></p>
+                    <p>{{ fact.description }}</p>
+                    <p class="performance-source"><a href="{{ fact.source_url }}">{{ fact.get_basis_display }}<span class="visually-hidden"> · {{ fact.get_kind_display }}</span></a> · проверено {{ fact.verified_on|date:"d.m.Y" }}</p>
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </section>
+    {% endif %}
+    <section class="performance" aria-labelledby="performance-heading">
+        <h2 id="performance-heading">Стойкость и шлейф</h2>
+        <dl>
+            {% for label, fact in performance %}
+            <div class="panel">
+                <dt>{{ label }}</dt>
+                <dd>
+                    {% if fact %}
+                    {% if fact.level %}<p><strong>{{ fact.get_level_display }}</strong> · значение для поиска</p>{% endif %}
+                    <p>{{ fact.description }}</p>
+                    <p class="performance-source"><a href="{{ fact.source_url }}">Данные производителя<span class="visually-hidden"> · {{ label }}</span></a> · проверено {{ fact.verified_on|date:"d.m.Y" }}</p>
+                    {% else %}
+                    <p class="performance-source">Нет подтверждённых данных производителя.</p>
+                    {% endif %}
+                </dd>
+            </div>
+            {% endfor %}
+        </dl>
+    </section>
+    <section class="rating-panel" id="rating" aria-labelledby="rating-heading">
+        <div>
+            <h2 id="rating-heading">Оценка посетителей</h2>
+            {% if rating.total %}
+            <p class="rating-score"><strong>{{ rating.average|floatformat:1 }}</strong> из 5 <span>· Голосов {{ rating.total }}</span></p>
+            {% else %}
+            <p class="rating-score">Пока нет оценок</p>
+            {% endif %}
+        </div>
+        <form method="post" action="{% url 'fragrance-detail' entry.pk %}#rating" class="rating-form">
+            {% csrf_token %}
+            <fieldset{% if rating_form.value.errors %} aria-describedby="rating-errors"{% endif %}>
+                <legend>Ваша оценка{% if personal_rating %} · {{ personal_rating }} из 5{% endif %}</legend>
+                <div class="rating-controls">
+                    <div class="rating-options">
+                        {% for option in rating_form.value %}
+                        <label>{{ option.tag }}<span>{{ option.choice_label }}</span></label>
+                        {% endfor %}
+                    </div>
+                    <button type="submit">{% if personal_rating %}Изменить оценку{% else %}Сохранить оценку{% endif %}</button>
+                </div>
+                {% if rating_form.value.errors %}<div id="rating-errors">{{ rating_form.value.errors }}</div>{% endif %}
+            </fieldset>
+        </form>
+    </section>
+    {% if related %}
+    <section class="related" aria-labelledby="related-heading">
+        <h2 id="related-heading">Материалы по нотам и семейству</h2>
+        <ul class="journal-grid">
+            {% for item in related %}
+            <li class="card"><p class="label">{{ item.get_kind_display }}</p><h3><a href="{% url 'material-detail' item.pk %}">{{ item.title }}</a></h3></li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+</article>
+{% endblock %}

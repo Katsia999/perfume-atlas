@@ -1,0 +1,8 @@
+<section class="examples" aria-labelledby="examples-heading">
+    <h2 id="examples-heading">Попробуйте поиск</h2>
+    <ul class="chips">
+        {% for example in examples %}
+        <li><a class="chip" href="{% url 'search' %}?q={{ example|urlencode }}">{{ example }}</a></li>
+        {% endfor %}
+    </ul>
+</section>

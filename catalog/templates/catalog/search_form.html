@@ -1,0 +1,13 @@
+<form method="get" action="{% url 'search' %}" role="search" class="filter-form panel">
+    <div class="query-field">
+        {{ form.q.label_tag }}
+        {{ form.q }}
+        {{ form.q.errors }}
+    </div>
+    <div>
+        {{ form.kind.label_tag }}
+        {{ form.kind }}
+        {{ form.kind.errors }}
+    </div>
+    <button type="submit">Найти</button>
+</form>

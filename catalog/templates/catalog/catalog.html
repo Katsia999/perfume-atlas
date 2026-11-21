@@ -1,0 +1,45 @@
+{% extends "catalog/base.html" %}
+{% block title %}Каталог · Атлас ароматов{% endblock %}
+{% block content %}
+<header class="page-heading">
+    <h1>Каталог ароматов</h1>
+    <p class="intro">Сравните версии, изучите ноты и откройте описания производителей.</p>
+</header>
+<form method="get" class="filter-form panel" aria-label="Фильтры каталога">
+    <div>{{ form.family.label_tag }}{{ form.family }}{{ form.family.errors }}</div>
+    <div>{{ form.brand.label_tag }}{{ form.brand }}{{ form.brand.errors }}</div>
+    <button type="submit">Показать</button>
+    {% if filtered %}<a href="{% url 'catalog' %}">Сбросить фильтры</a>{% endif %}
+</form>
+{% if form.errors %}
+<p class="notice">Выберите семейство и бренд из списка.</p>
+{% elif cards %}
+<section aria-labelledby="catalog-results">
+    <h2 id="catalog-results" class="results-heading">{% if filtered %}По выбранным фильтрам{% else %}Все версии{% endif %} <span class="count">{{ cards|length }}</span></h2>
+    <ul class="catalog-grid">
+        {% for card in cards %}
+        {% with entry=card.entry photo=card.photo %}
+        <li class="card fragrance-card">
+            <a class="fragrance-card-link" href="{% url 'fragrance-detail' entry.pk %}">
+                {% if photo %}
+                <img class="fragrance-card-photo" src="{{ photo.url }}" alt="" width="{{ photo.width }}" height="{{ photo.height }}" decoding="async"{% if forloop.counter > 3 %} loading="lazy"{% endif %}>
+                {% endif %}
+                <span class="label">{{ entry.brand.name }} · {{ entry.family.name }}</span>
+                <h3>{{ entry.name }}</h3>
+                <span class="version">{{ entry.version }}</span>
+            </a>
+            <p>{{ entry.description }}</p>
+            {% if entry.notes.all %}
+            <ul class="chips" aria-label="Ноты">
+                {% for note in entry.notes.all|slice:":4" %}<li class="chip">{{ note.name }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+        </li>
+        {% endwith %}
+        {% endfor %}
+    </ul>
+</section>
+{% else %}
+<div class="empty-state panel"><h2>Версии не найдены</h2><p>Попробуйте выбрать другое семейство или бренд.</p></div>
+{% endif %}
+{% endblock %}

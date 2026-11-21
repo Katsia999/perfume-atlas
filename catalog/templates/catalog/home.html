@@ -1,0 +1,60 @@
+{% extends "catalog/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-copy">
+        <p class="eyebrow">Гид по парфюмерии</p>
+        <h1 id="hero-heading">Атлас<br>ароматов</h1>
+        <p class="intro">Ищите ароматы по названию, изучайте их ноты и находите композиции по своим предпочтениям.</p>
+        <form method="get" action="{% url 'search' %}" role="search" class="hero-search">
+            <label for="{{ form.q.id_for_label }}" class="visually-hidden">Поиск по Атласу</label>
+            {{ form.q }}
+            <button type="submit">Найти</button>
+        </form>
+        <div class="hero-links">
+            <a href="{% url 'catalog' %}">Открыть каталог</a>
+            <a href="{% url 'selection' %}">Подобрать по нотам</a>
+        </div>
+    </div>
+    <img class="hero-image" src="{% static 'catalog/images/hero.webp' %}" alt="Янтарный флакон без маркировки, стручки ванили и щепки сандала" fetchpriority="high">
+</section>
+
+{% include "catalog/examples.html" %}
+
+{% if families %}
+<section class="home-section" aria-labelledby="families-heading">
+    <div class="section-heading">
+        <h2 id="families-heading">Семейства ароматов</h2>
+        <a href="{% url 'catalog' %}">Весь каталог</a>
+    </div>
+    <ul class="family-grid">
+        {% for family in families %}
+        <li>
+            <a href="{% url 'catalog' %}?family={{ family.entry.pk }}">
+                {% static 'catalog/images/' as image_dir %}
+                <img src="{{ image_dir }}{{ family.image.0 }}" alt="" loading="lazy" width="480" height="320">
+                <div class="family-copy"><h3>{{ family.entry.name }}</h3><p>{{ family.entry.description }}</p></div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+<section class="home-section" aria-labelledby="journal-heading">
+    <div class="section-heading">
+        <h2 id="journal-heading">Из журнала</h2>
+        <a href="{% url 'search' %}?kind=article">Все статьи</a>
+    </div>
+    <ul class="journal-grid">
+        {% for entry in journal %}{% if entry %}
+        <li class="card">
+            <p class="label">{{ entry.get_kind_display }}{% if entry.published_on %} · {{ entry.published_on|date:"d.m.Y" }}{% endif %}</p>
+            <h3><a href="{% url 'material-detail' entry.pk %}">{{ entry.title }}</a></h3>
+            <p>{{ entry.description }}</p>
+        </li>
+        {% endif %}{% endfor %}
+    </ul>
+</section>
+{% endblock %}

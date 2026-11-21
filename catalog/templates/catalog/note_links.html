@@ -1,0 +1,5 @@
+<ul class="chips" role="list">
+    {% for note in notes %}
+    <li><a class="chip" href="{% url 'selection' %}?note={{ note.pk }}">{{ note.name }}</a></li>
+    {% endfor %}
+</ul>

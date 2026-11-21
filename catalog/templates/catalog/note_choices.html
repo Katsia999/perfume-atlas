@@ -1,0 +1,5 @@
+<ul class="choices">
+    {% for note in options %}
+    <li><label><input type="checkbox" name="note" value="{{ note.pk }}"{% if note.pk in selected_ids %} checked{% endif %}><span>{{ note.name }}</span></label></li>
+    {% endfor %}
+</ul>

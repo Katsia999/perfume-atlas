@@ -1,0 +1,101 @@
+query,label,group,split
+духи с ванилью и сандалом,fragrance,vanilla-sandal,train
+Найди парфюм с ванильной нотой и сандалом,fragrance,vanilla-sandal,train
+Какие ароматы пахнут ванилью и сандаловым деревом?,fragrance,vanilla-sandal,train
+Какой аромат с ванилью и сандалом есть в каталоге?,fragrance,vanilla-sandal,train
+Chance Eau Tendre EDT,fragrance,chance-edt,train
+Шанс О Тандр туалетная вода,fragrance,chance-edt,train
+Найди версию Eau de Toilette у Chanel Chance Eau Tendre,fragrance,chance-edt,train
+цитрусовый аромат с лимоном,fragrance,citrus-lemon,train
+Подбери туалетную воду с лимонной нотой,fragrance,citrus-lemon,train
+Есть ли в каталоге духи из цитрусового семейства с лимоном?,fragrance,citrus-lemon,train
+парфюм без мускуса,fragrance,no-musk,train
+Покажи ароматы без ноты мускуса,fragrance,no-musk,train
+Какие духи есть без белого мускуса в списке нот?,fragrance,no-musk,train
+цветочный аромат с розой,fragrance,rose-floral,train
+Что есть из цветочных духов с розовой нотой?,fragrance,rose-floral,train
+Найди мне цветочную парфюмерную воду с розой,fragrance,rose-floral,train
+духи по нотам кедра и ветивера,fragrance,cedar-vetiver,train
+Подбери аромат с кедром и ветивером,fragrance,cedar-vetiver,train
+Хочу парфюм с кедровой древесиной и ветивером,fragrance,cedar-vetiver,train
+Terre d’Hermès Eau Givrée,fragrance,givree,test
+Найди Тер д’Эрмес О Живре в каталоге,fragrance,givree,test
+Карточка цитрусовой версии Eau Givrée от Hermès,fragrance,givree,test
+древесные ароматы,fragrance,woody,test
+Покажите духи из древесного семейства,fragrance,woody,test
+Подбери древесный парфюм,fragrance,woody,test
+статья о разнице между EDT и EDP,article,concentration,train
+Хочу почитать чем туалетная вода отличается от парфюмерной,article,concentration,train
+Объясни что означают сокращения EDT и EDP,article,concentration,train
+Где прочитать про маркировку Eau de Toilette и Eau de Parfum?,article,concentration,train
+Что такое шлейф аромата?,article,sillage,train
+Найди статью о том что значит шлейф у духов,article,sillage,train
+Мне нужно текстовое объяснение термина «шлейф»,article,sillage,train
+Как хранить духи дома?,article,storage,train
+Статья об условиях хранения флакона,article,storage,train
+Хочу прочитать советы по хранению парфюма,article,storage,train
+Что называют аккордом в парфюмерии?,article,accords,train
+Найди объяснение разницы между аккордом и отдельной нотой,article,accords,train
+Статья о парфюмерных аккордах для начинающих,article,accords,train
+Расскажи что такое блоттер,article,blotter,train
+Хочу почитать зачем нужны тестовые полоски,article,blotter,train
+Подскажи статью о том как пользоваться блоттером,article,blotter,train
+Статья про происхождение названия «шипр»,article,chypre,train
+Что такое шипровое семейство?,article,chypre,train
+Хочу прочитать про историю шипровой группы,article,chypre,train
+Что такое ноты сердца?,article,pyramid,test
+Найди статью про верхние ноты и базу,article,pyramid,test
+Хочу почитать как устроена пирамида раскрытия аромата,article,pyramid,test
+Что такое абсолют жасмина?,article,absolute,test
+Посоветуй статью о получении абсолюта из цветков,article,absolute,test
+Объяснение термина «парфюмерный абсолют» для новичка,article,absolute,test
+Видео о работе парфюмера в лаборатории,video,lab,train
+Хочу посмотреть как парфюмер работает в лаборатории,video,lab,train
+Найди ролик про рабочее место и инструменты парфюмера,video,lab,train
+Есть видеоэкскурсия по лаборатории создателя ароматов?,video,lab,train
+интервью с создателем аромата на видео,video,interview,train
+Покажи запись беседы с парфюмером,video,interview,train
+Хочу посмотреть интервью о работе над композицией,video,interview,train
+Видеообзор флаконов Chanel,video,bottles,train
+Найди ролик про дизайн флаконов Шанель,video,bottles,train
+Покажи в видео как выглядят разные флаконы Chanel,video,bottles,train
+как получают эфирное масло на видео,video,distillation,train
+Ролик о паровой дистилляции цветов,video,distillation,train
+Хочу посмотреть демонстрацию получения эфирного масла,video,distillation,train
+Видео с распаковкой парфюмерных пробников,video,unboxing,train
+Дай ссылку на ролик с распаковкой набора пробников,video,unboxing,train
+Хочу посмотреть распаковку discovery set,video,unboxing,train
+Покажи видео с парфюмерной выставки,video,exhibition,train
+Видеоролик с прогулкой по стендам парфюмерной выставки,video,exhibition,train
+Найди съёмку павильонов на выставке ароматов,video,exhibition,train
+Покажи видео о том как выбрать аромат,video,choose,test
+видео Sephora про выбор духов,video,choose,test
+Хочу посмотреть ролик с советами по подбору своего аромата,video,choose,test
+Видео о нанесении духов,video,apply,test
+Хочу посмотреть как распылять парфюм,video,apply,test
+Покажи демонстрацию нанесения парфюма на кожу,video,apply,test
+свежие новости парфюмерии,news,recent,train
+Какие новинки ароматов вышли за последние 30 дней?,news,recent,train
+Покажи новости о выходе духов за последний месяц,news,recent,train
+Что нового выпустили парфюмерные дома за месяц?,news,recent,train
+новости о лауреатах парфюмерной премии,news,awards,train
+Кого назвали победителем премии среди ароматов?,news,awards,train
+Найди репортаж с объявления победителей премии,news,awards,train
+открытие нового бутика Guerlain,news,boutique,train
+Есть новости об открытии магазина Герлен?,news,boutique,train
+Что сообщали о запуске нового бутика Guerlain?,news,boutique,train
+Что известно об анонсе новой версии Bleu de Chanel?,news,flanker,train
+Когда Chanel объявил о выпуске новой версии Bleu?,news,flanker,train
+Найди новость о запуске новой версии Bleu de Chanel,news,flanker,train
+парфюмерные новости о назначениях,news,appointment,train
+Кого назначили новым главным парфюмером дома?,news,appointment,train
+Найди сообщение о назначении нового штатного парфюмера,news,appointment,train
+анонс новой выставки ароматов,news,event,train
+Какую дату объявили для открытия выставки современного парфюма?,news,event,train
+Покажи новости о предстоящей парфюмерной выставке,news,event,train
+Какую первую коллекцию представил Eryon?,news,debut,test
+Найди новость о дебюте швейцарского дома Eryon,news,debut,test
+Когда вышла дебютная коллекция ароматов Eryon?,news,debut,test
+Новости о сотрудничестве модного дома и парфюмера,news,partnership,test
+Какую совместную парфюмерную коллекцию анонсировали дизайнеры?,news,partnership,test
+Сообщение о новой коллаборации брендов в парфюмерии,news,partnership,test
