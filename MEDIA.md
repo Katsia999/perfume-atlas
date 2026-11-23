@@ -7,7 +7,7 @@
 | Где используются | Файлы |
 | --- | --- |
 | Главная и семейства ароматов | `hero.webp`, `floral.webp`, `wood.webp`, `fresh.webp`, `amber.webp`, `gourmand.jpg` |
-| Журнал | `articles/notes-pyramid.webp`, `articles/fragrance-wheel.webp`, `articles/fragrance-materials.webp`, `articles/fragrance-testing.webp`, `articles/vetiver-roots.webp`, `articles/terre-comparison.webp`. В отдельных статьях используются и иллюстрации семейств. |
+| Журнал | `articles/notes-pyramid.webp`, `articles/fragrance-wheel.webp`, `articles/fragrance-materials.webp`, `articles/fragrance-testing.webp`, `articles/vetiver-roots.webp`, `articles/terre-comparison.webp`. Статьи от 22 ноября используют готовые натюрморты и иллюстрации семейств «Атласа». |
 
 ## Официальные фотографии для локального показа
 
@@ -15,4 +15,4 @@
 
 ## Видео
 
-Сайт показывает ролики с официальных каналов Sephora, LVMH и Hermès через встроенный плеер YouTube с расширенной конфиденциальностью. В проект входят русские аннотации и ссылки на оригиналы. Для воспроизведения в карточке нужны подключение к интернету и разрешённое владельцем встраивание. Рядом с плеером доступна ссылка на оригинал. [Демонстрационные материалы](data/demo/materials.csv) · [Статьи со встроенными видео и источниками](data/articles/)
+Сайт показывает ролики с официальных каналов Sephora, LVMH, Hermès, Gucci, Victoria’s Secret, Chanel, Guerlain и YSL Beauty через встроенный плеер YouTube с расширенной конфиденциальностью. В проект входят русские аннотации и ссылки на оригиналы. Для воспроизведения в карточке нужны подключение к интернету и разрешённое владельцем встраивание. Рядом с плеером доступна ссылка на оригинал. [Демонстрационные материалы](data/demo/materials.csv) · [Статьи со встроенными видео и источниками](data/articles/) · [Условия YouTube](https://www.youtube.com/t/terms)

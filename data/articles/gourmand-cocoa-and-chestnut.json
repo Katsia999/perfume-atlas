@@ -1,0 +1,81 @@
+{
+  "description": "Что объединяет Tease Cocoa Soirée и REPLICA By the Fireplace и откуда берётся разница между какао и каштаном.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Какао",
+    "Малина",
+    "Фрезия",
+    "Ваниль",
+    "Каштан"
+  ],
+  "families": [
+    "Гурманское",
+    "Древесное"
+  ],
+  "lead": "Гурманскими называют композиции с ассоциациями на еду и напитки. Тёмное какао со сливками и каштан с дымной древесиной дают два удобных примера.",
+  "image": {
+    "path": "catalog/images/amber.webp",
+    "alt": "Тёмные стручки ванили и кусочки янтарной смолы.",
+    "caption": "Ваниль и тёплые смолистые оттенки помогают представить аромат у камина."
+  },
+  "sections": [
+    {
+      "heading": "Tease Cocoa Soirée: ягоды и тёмное какао",
+      "paragraphs": [
+        "Victoria’s Secret описывает начало из малины и ежевики, цветочную часть из фрезии и десертный финал из тёмного какао и сливок шантильи. Попробуйте на блоттере найти момент, когда ягоды уступают место какао."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Tease Cocoa Soirée",
+          "version": "Eau de Parfum",
+          "label": "Открыть Tease Cocoa Soirée Eau de Parfum"
+        },
+        {
+          "kind": "note",
+          "name": "Какао",
+          "label": "Подбор по ноте «Какао»"
+        }
+      ]
+    },
+    {
+      "heading": "By the Fireplace: сухое тепло",
+      "paragraphs": [
+        "Maison Margiela соединяет каштановый аккорд с древесными оттенками и ванилью. В описании бренда отсылка к камину возникает из сочетания дыма, дерева и жареного каштана. Десертное впечатление здесь связано с сухой древесиной."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Maison Margiela",
+          "name": "REPLICA By the Fireplace",
+          "version": "Eau de Toilette",
+          "label": "Открыть REPLICA By the Fireplace"
+        }
+      ]
+    },
+    {
+      "heading": "Как уточнить запрос на подбор",
+      "paragraphs": [
+        "Запросите какао, если хотите начать с шоколадного оттенка. Для аромата с древесным фоном попробуйте каштан или древесное семейство. Выберите карточку и сравните, где поместили интересующую вас ноту."
+      ],
+      "links": [
+        {
+          "kind": "note",
+          "name": "Каштан",
+          "label": "Подбор по ноте «Каштан»"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Victoria’s Secret — Tease Cocoa Soirée",
+      "url": "https://vspressroom.com/wp-content/uploads/2023/08/victorias-secret-beauty-2022-tease-cocoa-soiree-media-kit-8-24.pdf"
+    },
+    {
+      "label": "Maison Margiela — REPLICA By the Fireplace",
+      "url": "https://www.maisonmargiela-fragrances.eu/en_GB/fragrances/discover/replica-memories/replica-by-the-fireplace/MM005.html"
+    }
+  ]
+}

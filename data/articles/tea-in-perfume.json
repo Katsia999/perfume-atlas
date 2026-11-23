@@ -1,0 +1,69 @@
+{
+  "description": "Как чайный аккорд проявляется в Donna Green Stravaganza, Oolang Clair-Obscur и Find My Star.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Чай лапсанг сушонг",
+    "Жасмин",
+    "Ваниль",
+    "Имбирь",
+    "Ландыш"
+  ],
+  "families": [
+    "Цветочное",
+    "Цитрусовое"
+  ],
+  "lead": "Чайный аккорд может напоминать дымный настой или поддерживать цитрусовую свежесть. Сравним описание Valentino и два примера из осенних новостей.",
+  "image": {
+    "path": "catalog/images/fresh.webp",
+    "alt": "Зелёные плоды бергамота, листья и срез плода.",
+    "caption": "Цедра бергамота отсылает к цитрусовой стороне чайных аккордов."
+  },
+  "sections": [
+    {
+      "heading": "Лапсанг сушонг у Valentino",
+      "paragraphs": [
+        "Donna Born in Roma Green Stravaganza начинает с аккорда лапсанг сушонг. В описании Valentino за чайным вступлением следует жасмин, затем сладость ванили. Чтобы уловить переход, сделайте первую заметку при нанесении и вернитесь к блоттеру после раскрытия."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Valentino",
+          "name": "Donna Born in Roma Green Stravaganza",
+          "version": "Eau de Parfum",
+          "label": "Открыть Donna Born in Roma Green Stravaganza Eau de Parfum"
+        },
+        {
+          "kind": "note",
+          "name": "Чай лапсанг сушонг",
+          "label": "Подбор по ноте «Чай лапсанг сушонг»"
+        }
+      ]
+    },
+    {
+      "heading": "Улун с юдзу и кожей",
+      "paragraphs": [
+        "Atelier Cologne соединяет ноту дымного улуна с юдзу и кожей в Oolang Clair-Obscur. У этой композиции есть сразу три ориентира: цитрусовая свежесть, дым и кожа. Их удобно сопоставить с более мягким жасминово-ванильным окружением чая у Valentino."
+      ]
+    },
+    {
+      "heading": "Эрл грей с ландышем у SHIRO",
+      "paragraphs": [
+        "В Find My Star японская марка SHIRO помещает эрл грей в сердце вместе с ландышем и иланг-илангом. В начале указаны лайм, вербена и имбирь. При сравнении описаний видно, что чай можно разместить на разных этапах раскрытия."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Valentino — Donna Born in Roma Green Stravaganza",
+      "url": "https://www.valentino-beauty.us/fragrances/fragrances-women/fragrances-women-green-stravaganza/born-in-roma-donna-green-stravaganza-3614274024760.html?geo=false"
+    },
+    {
+      "label": "Now Smell This — Atelier Cologne Oolang Clair-Obscur",
+      "url": "https://nstperfume.com/2026/10/28/atelier-cologne-oolang-clair-obscur-new-fragrance/"
+    },
+    {
+      "label": "SHIRO — Find My Star и коллекция Holiday Perfume",
+      "url": "https://shiro-shiro.jp/ec/sp?F=9051"
+    }
+  ]
+}

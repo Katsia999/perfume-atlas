@@ -1,0 +1,107 @@
+{
+  "description": "Гид по парфюмерным водам Gucci Flora Gorgeous Gardenia, Jasmine, Magnolia и Orchid. Четыре варианта цветочного характера.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Гардения",
+    "Жасмин",
+    "Магнолия",
+    "Цветок ванили"
+  ],
+  "families": [
+    "Цветочное",
+    "Гурманское"
+  ],
+  "lead": "В Gucci Flora название даёт первый ориентир. Чтобы выбрать из четырёх версий, полезно посмотреть, чем марка сопровождает каждый из цветков.",
+  "image": {
+    "path": "catalog/images/floral.webp",
+    "alt": "Белые цветки жасмина рядом с розовыми лепестками.",
+    "caption": "У каждой версии Gucci Flora свой набор цветочных и соседних оттенков."
+  },
+  "sections": [
+    {
+      "heading": "Gorgeous Gardenia и Gorgeous Jasmine",
+      "paragraphs": [
+        "Gardenia соединяет цветочное сердце с красными ягодами и коричневым сахаром. В Jasmine марка использует жасмин грандифлорум и самбак вместе с магнолией и розой. В его базе на первый план выходят сандал, бензоин и пачули."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Gucci",
+          "name": "Flora Gorgeous Gardenia",
+          "version": "Eau de Parfum",
+          "label": "Открыть Flora Gorgeous Gardenia Eau de Parfum"
+        },
+        {
+          "kind": "fragrance",
+          "brand": "Gucci",
+          "name": "Flora Gorgeous Jasmine",
+          "version": "Eau de Parfum",
+          "label": "Открыть Flora Gorgeous Jasmine Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Gorgeous Magnolia и Gorgeous Orchid",
+      "paragraphs": [
+        "Magnolia начинает с ежевики, апельсина и кокоса, после которых раскрывается сердце с магнолией и иланг-илангом. В Orchid Gucci выделяет дуэт ванили, ванильную орхидею и озоновый аккорд. Воплощение цветочной темы здесь тесно связано с гурманской сладостью."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Gucci",
+          "name": "Flora Gorgeous Magnolia",
+          "version": "Eau de Parfum",
+          "label": "Открыть Flora Gorgeous Magnolia Eau de Parfum"
+        },
+        {
+          "kind": "fragrance",
+          "brand": "Gucci",
+          "name": "Flora Gorgeous Orchid",
+          "version": "Eau de Parfum",
+          "label": "Открыть Flora Gorgeous Orchid Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "С какой пары начать",
+      "paragraphs": [
+        "Поставьте рядом Jasmine и Gardenia, если в первую очередь интересует букет белых цветов. Сравните Magnolia и Orchid, если хочется понять, как меняют впечатление ягодно-кокосовое начало и озоновая свежесть."
+      ],
+      "links": [
+        {
+          "kind": "note",
+          "name": "Магнолия",
+          "label": "Подбор по ноте «Магнолия»"
+        },
+        {
+          "kind": "note",
+          "name": "Цветок ванили",
+          "label": "Подбор по ноте «Ванильная орхидея»"
+        }
+      ]
+    }
+  ],
+  "video": {
+    "title": "Майли Сайрус в кампании Gorgeous Orchid",
+    "description": "Фильм Gucci передаёт воздушный образ Gorgeous Orchid через цвет и смену сцен.",
+    "source_url": "https://www.youtube.com/watch?v=A72b17CHozw"
+  },
+  "sources": [
+    {
+      "label": "Gucci — Flora Gorgeous Gardenia",
+      "url": "https://www.gucci.com/us/en/pr/beauty/fragrances/fragrances-for-women/gucci-flora-gorgeous-gardenia-100ml-eau-de-parfum-p-667343999990099"
+    },
+    {
+      "label": "Gucci — Flora Gorgeous Jasmine",
+      "url": "https://www.gucci.com/gr/en_gb/pr/beauty/fragrances/fragrances-for-women/gucci-flora-gorgeous-jasmine-50ml-eau-de-parfum-p-701228999990099"
+    },
+    {
+      "label": "Gucci — Flora Gorgeous Magnolia",
+      "url": "https://www.gucci.com/uk/en_gb/pr/beauty/fragrances/fragrances-for-women/gucci-flora/gucci-flora-gorgeous-magnolia-100ml-eau-de-parfum-p-757363999990099"
+    },
+    {
+      "label": "Gucci — Flora Gorgeous Orchid",
+      "url": "https://www.gucci.com/us/en/pr/beauty/fragrances/fragrances-for-women/gucci-flora-gorgeous-orchid-100ml-eau-de-parfum-p-792056999990099"
+    }
+  ]
+}

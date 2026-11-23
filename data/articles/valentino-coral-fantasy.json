@@ -1,0 +1,79 @@
+{
+  "description": "Две версии одной линии Valentino. У Donna — киви, жасмин и роза, у Uomo — красное яблоко, шалфей и табак.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Киви",
+    "Яблоко",
+    "Жасмин",
+    "Шалфей",
+    "Табак"
+  ],
+  "families": [
+    "Цветочно-фруктовое",
+    "Древесное"
+  ],
+  "lead": "Valentino использует один образ римского заката для двух Coral Fantasy. В каждой композиции свой фрукт, своё сердце и свой финал.",
+  "image": {
+    "path": "catalog/images/articles/notes-pyramid.webp",
+    "alt": "Апельсиновая цедра, белые цветы, сухая древесина и кусочки смолы.",
+    "caption": "Натюрморт напоминает о трёх этапах раскрытия, по которым удобно сравнить версии."
+  },
+  "sections": [
+    {
+      "heading": "Donna: киви и цветочный букет",
+      "paragraphs": [
+        "В Donna Born in Roma Coral Fantasy киви даёт сочное начало. Жасмин вместе с розой образуют цветочную часть, а в базе Valentino соединяет мускус и семена амбретты."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Valentino",
+          "name": "Donna Born in Roma Coral Fantasy",
+          "version": "Eau de Parfum",
+          "label": "Открыть Donna Born in Roma Coral Fantasy Eau de Parfum"
+        },
+        {
+          "kind": "note",
+          "name": "Киви",
+          "label": "Подбор по ноте «Киви»"
+        }
+      ]
+    },
+    {
+      "heading": "Uomo: красное яблоко и табачный финал",
+      "paragraphs": [
+        "Uomo Born in Roma Coral Fantasy открывается аккордом красного яблока. Шалфей добавляет травяной характер, а табак завершает композицию тёплым сухим оттенком."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Valentino",
+          "name": "Uomo Born in Roma Coral Fantasy",
+          "version": "Eau de Toilette",
+          "label": "Открыть Uomo Born in Roma Coral Fantasy Eau de Toilette"
+        },
+        {
+          "kind": "note",
+          "name": "Табак",
+          "label": "Подбор по ноте «Табак»"
+        }
+      ]
+    },
+    {
+      "heading": "Как разложить впечатление на части",
+      "paragraphs": [
+        "Сначала отметьте, какой фрукт ощущается ярче сразу после нанесения. Позже сравните цветочное сердце Donna с травяным сердцем Uomo. Для базы отдельно запишите, какие ощущения оставили мускус и табак."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Valentino — Donna Born in Roma Coral Fantasy",
+      "url": "https://www.valentino-beauty.us/fragrances/fragrances-women/fragrances-women-born-in-roma-coral/born-in-roma-donna-coral-fantasy-eau-de-parfum-3614273672054.html"
+    },
+    {
+      "label": "Valentino — Uomo Born in Roma Coral Fantasy",
+      "url": "https://www.valentino-beauty.us/fragrances/fragrances-men/fragrances-men-born-in-roma-coral/born-in-roma-uomo-coral-fantasy-eau-de-toilette-3614273672412.html?geo=false"
+    }
+  ]
+}

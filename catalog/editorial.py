@@ -15,6 +15,16 @@ ADDITIONAL_ARTICLE_FILES = {
     "Как пахнет ветивер и с чем его сочетают": "vetiver-in-perfume.json",
     "Как выбрать парфюм: от блоттера до пробы на коже": "fragrance-testing.json",
     "Две версии Terre d’Hermès: классика и Eau Givrée": "terre-comparison.json",
+    "Гардения в парфюмерии: Gucci Flora и Victoria’s Secret Tease": "gardenia-in-perfume.json",
+    "Bombshell и Bombshell Intense: как меняется пион": "bombshell-comparison.json",
+    "Линейка Tease: от гардении до меренги и какао": "tease-family.json",
+    "Четыре Gucci Flora: гардения, жасмин, магнолия и орхидея": "gucci-flora-collection.json",
+    "Что означает Intense на примере Valentino Born in Roma": "born-in-roma-intense.json",
+    "Чайные ноты в парфюмерии: дым, цитрус и цветы": "tea-in-perfume.json",
+    "Пион в ароматах: от граната до вишни": "peony-in-perfume.json",
+    "Libre и Idôle: два цветочных аромата с разным характером": "libre-and-idole.json",
+    "Гурманские ноты: какао, сливки и жареный каштан": "gourmand-cocoa-and-chestnut.json",
+    "Valentino Coral Fantasy: киви и красное яблоко": "valentino-coral-fantasy.json",
 }
 
 ARTICLE_FILES = {

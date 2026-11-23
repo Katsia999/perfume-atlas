@@ -26,12 +26,15 @@ def save_entry(model, key, fields):
     return entry
 
 
-def load_csv(directory, filename, columns, save_row):
+def load_csv(directory, filename, columns, save_row, *, optional_columns=()):
     imported = {}
     try:
         with (directory / filename).open(encoding="utf-8-sig", newline="") as file:
             reader = csv.DictReader(file, strict=True)
-            if sorted(reader.fieldnames or []) != sorted(columns.split()):
+            required = set(columns.split())
+            header = reader.fieldnames or []
+            fields = set(header)
+            if len(fields) != len(header) or not required <= fields <= required.union(optional_columns):
                 raise CommandError(f"{filename}: ожидаются столбцы {columns}.")
 
             for row in reader:

@@ -19,11 +19,26 @@ COLUMNS = (
     "photo_source_url image_url terms_url photo_filename photo_width photo_height evidence_note"
 )
 PHOTO_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
+PHOTO_FIELDS = ("photo_source_url", "image_url", "terms_url", "photo_filename", "photo_width", "photo_height")
 HTTPS_URL = URLValidator(schemes=["https"])
 
 
+def validate_photo(row):
+    if not any(row[field] for field in PHOTO_FIELDS):
+        return
+    if not all(row[field] for field in PHOTO_FIELDS):
+        raise ValueError("Заполните все данные официальной фотографии.")
+    filename = Path(row["photo_filename"])
+    if filename.name != row["photo_filename"] or filename.stem != row["code"] or filename.suffix not in PHOTO_SUFFIXES:
+        raise ValueError("Имя фото должно состоять из кода версии и расширения изображения.")
+    if min(int(row["photo_width"]), int(row["photo_height"])) < 1:
+        raise ValueError("Укажите положительные размеры фотографии.")
+    for field in ("photo_source_url", "image_url", "terms_url"):
+        HTTPS_URL(row[field])
+
+
 class Command(BaseCommand):
-    help = "Загрузить новые версии с характером и подтверждёнными тремя уровнями пирамиды."
+    help = "Загрузить новые версии с характером и подтверждёнными нотами."
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -50,19 +65,13 @@ class Command(BaseCommand):
                 raise ValueError("Версия уже входит в исходный набор или повторяется в партии.")
             if row["family_origin"] not in ("source", "catalog"):
                 raise ValueError("Допустимые значения family_origin: source и catalog.")
-            if not all(row[level] for level in FragranceNote.Level.values):
-                raise ValueError("Для новой версии укажите верхние ноты, сердце и базу.")
-            filename = Path(row["photo_filename"])
-            if (
-                filename.name != row["photo_filename"]
-                or filename.stem != code
-                or filename.suffix not in PHOTO_SUFFIXES
+            has_levels = any(row[level] for level in FragranceNote.Level.values)
+            if not all(row[level] for level in FragranceNote.Level.values) and not (
+                row.get("notes") and row["evidence_note"]
             ):
-                raise ValueError("Имя фото должно состоять из кода версии и расширения изображения.")
-            if min(int(row["photo_width"]), int(row["photo_height"])) < 1:
-                raise ValueError("Укажите положительные размеры фотографии.")
-            for field in ("source_url", "photo_source_url", "image_url", "terms_url"):
-                HTTPS_URL(row[field])
+                raise ValueError("Укажите три уровня или общий список нот и объясните неполную пирамиду.")
+            validate_photo(row)
+            HTTPS_URL(row["source_url"])
             if row["pyramid_source_url"]:
                 HTTPS_URL(row["pyramid_source_url"])
             identities.add(identity)
@@ -83,12 +92,12 @@ class Command(BaseCommand):
                     "pyramid_source_url": (
                         "" if row["pyramid_source_url"] == row["source_url"] else row["pyramid_source_url"]
                     ),
-                    "pyramid_verified_on": fields["verified_on"],
+                    "pyramid_verified_on": fields["verified_on"] if has_levels else None,
                 },
             )
             return code, (save_character(fragrance, row["labels"]), save_pyramid_notes(fragrance, row))
 
-        added = load_csv(file.parent, file.name, COLUMNS, save_fragrance)
+        added = load_csv(file.parent, file.name, COLUMNS, save_fragrance, optional_columns=("notes",))
         if not added:
             raise CommandError(f"{file.name}: добавьте хотя бы одну версию.")
         self.stdout.write(self.style.SUCCESS(

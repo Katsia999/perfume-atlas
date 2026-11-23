@@ -78,6 +78,8 @@ class Command(BaseCommand):
             "фруктовый профиль", "опубликованным данным каждой версии",
         ))
         check("Я хочу аромат без фруктовых нот", fragrance_urls(non_fruity))
+        if Note.objects.filter(name="Меренга").exists():
+            check("аромат с безе", fragrance_urls(fragrances.filter(notes__name="Меренга")))
         check("Можешь посоветовать древесный аромат без мускуса?", fragrance_urls(
             fragrances.filter(woody).exclude(notes__name="Мускус")
         ))
@@ -416,6 +418,9 @@ class Command(BaseCommand):
         check("Какие новые ароматы представили за месяц?", urls(recent, "material-detail"), contains=(
             f"{since:%d.%m.%Y} – {until:%d.%m.%Y}",
         ))
+        check("свежие новости", urls(recent, "material-detail"), kind="news")
+        for kind in Material.Kind.values:
+            check("", urls(materials.filter(kind=kind), "material-detail"), kind=kind)
 
         note_ids = list(Note.objects.filter(name__in=("Ваниль", "Сандал")).values_list("pk", flat=True))
         selection = RESULT_LINK.findall(read(reverse("selection"), {"note": note_ids}))

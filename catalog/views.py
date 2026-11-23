@@ -38,6 +38,11 @@ NOTE_GROUPS = (
     ("top", "Верхние ноты"), ("heart", "Ноты сердца"), ("base", "Базовые ноты"),
 )
 RATING_SESSION_KEY = "fragrance_rating_visitor"
+MATERIAL_LIST_TITLES = {
+    Material.Kind.ARTICLE: "Все статьи",
+    Material.Kind.VIDEO: "Все видео",
+    Material.Kind.NEWS: "Все новости",
+}
 
 
 class SearchForm(forms.Form):
@@ -160,12 +165,17 @@ def search_page(request):
     form = SearchForm(request.GET)
     response = None
     original = request.GET.get("original") == "1"
-    if form.is_valid() and (form.cleaned_data["q"] or form.cleaned_data["kind"] == Material.Kind.ARTICLE):
-        response = search(form.cleaned_data["q"], form.cleaned_data["kind"], autocorrect=not original)
+    list_title = None
+    if form.is_valid():
+        query, kind = form.cleaned_data["q"], form.cleaned_data["kind"]
+        list_title = MATERIAL_LIST_TITLES.get(kind) if not query else None
+        if query or list_title:
+            response = search(query, kind, autocorrect=not original)
     return render(request, "catalog/search.html", {
         "form": form,
         "examples": EXAMPLES,
         "query": form.cleaned_data.get("q", ""),
+        "list_title": list_title,
         "response": response,
         "original": original,
     })

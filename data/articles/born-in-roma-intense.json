@@ -1,0 +1,74 @@
+{
+  "description": "Сравниваем Donna Born in Roma и Donna Born in Roma Intense. Общая ваниль появляется на разных уровнях.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Ваниль",
+    "Жасмин",
+    "Кашмеран",
+    "Бензоин"
+  ],
+  "families": [
+    "Амбровое"
+  ],
+  "lead": "Две парфюмерные воды Donna Born in Roma можно сравнить по положению ванили и по тому, что её окружает. У классики и Intense для этого есть отдельные описания производителя.",
+  "image": {
+    "path": "catalog/images/amber.webp",
+    "alt": "Тёмные стручки ванили и кусочки янтарной смолы.",
+    "caption": "Ванильные стручки и смолы помогают представить два направления внутри линии Valentino."
+  },
+  "sections": [
+    {
+      "heading": "Классическая Donna Born in Roma",
+      "paragraphs": [
+        "Международная карточка Valentino указывает жасмин самбак в начале, кашмеран в сердце и бурбонскую ваниль в базе. Кашмеран в описании даёт древесно-пряную сторону композиции. На пробе можно проследить, как цветочный акцент уступает место ванили."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Valentino",
+          "name": "Donna Born in Roma",
+          "version": "Eau de Parfum",
+          "label": "Открыть Donna Born in Roma Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Donna Born in Roma Intense",
+      "paragraphs": [
+        "В версии Intense ваниль помещена в открытие, а жасмин — в сердце. Тёплый бензоин в базе поддерживает ванильную тему. Эта последовательность помогает сравнивать версии по самому раскрытию."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Valentino",
+          "name": "Donna Born in Roma Intense",
+          "version": "Eau de Parfum",
+          "label": "Открыть Donna Born in Roma Intense Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Что можно узнать по названию",
+      "paragraphs": [
+        "Intense обозначает отдельную версию в коллекции. Чтобы сравнить воспринимаемую стойкость, подпишите полоски, нанесите одинаковое количество и вернитесь к ним через заранее выбранный интервал. По одной маркировке длительность звучания определить нельзя."
+      ],
+      "links": [
+        {
+          "kind": "note",
+          "name": "Ваниль",
+          "label": "Подбор по ноте «Ваниль»"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Valentino — Donna Born in Roma",
+      "url": "https://www.valentino-beauty.com/int/fragrances/women-fragrances/born-in-roma-donna/born-in-roma-donna/MPL00468.html"
+    },
+    {
+      "label": "Valentino — Donna Born in Roma Intense",
+      "url": "https://www.valentino-beauty.us/fragrances/fragrances-women/born-in-roma-donna-intense/born-in-roma-donna-eau-de-parfum-intense-3614273790840.html"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "description": "Сравниваем пион с гранатом у Fragonard, с маракуйей у Bombshell и с вишней у Bombshell Intense.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Пион",
+    "Гранат",
+    "Маракуйя",
+    "Вишня"
+  ],
+  "families": [
+    "Цветочное",
+    "Цветочно-фруктовое"
+  ],
+  "lead": "Пион легко встретить рядом с фруктовыми нотами. Как именно выглядит это соседство, видно на примере Fragonard и двух парфюмерных вод Victoria’s Secret.",
+  "image": {
+    "path": "catalog/images/floral.webp",
+    "alt": "Белые цветки жасмина рядом с розовыми лепестками.",
+    "caption": "Цветочный натюрморт сопровождает сравнение трёх композиций с пионом."
+  },
+  "sections": [
+    {
+      "heading": "Fragonard: гранат и пион",
+      "paragraphs": [
+        "Название Grenade Pivoine указывает на гранат и пион. Бренд разводит эти ориентиры по открытию и сердцу. При пробе сравните первое фруктовое впечатление с цветочной частью после раскрытия."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Fragonard",
+          "name": "Grenade Pivoine",
+          "version": "Eau de Parfum",
+          "label": "Открыть Grenade Pivoine Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Victoria’s Secret: маракуйя или вишня",
+      "paragraphs": [
+        "В Bombshell заявлен пион Шангри-Ла рядом с яркой маракуйей. В Bombshell Intense бренд выбирает красный пион, вишню и ваниль. Оба варианта дают возможность сравнить один цветочный мотив в окружении двух разных фруктов."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Bombshell",
+          "version": "Eau de Parfum",
+          "label": "Открыть Bombshell Eau de Parfum"
+        },
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Bombshell Intense",
+          "version": "Eau de Parfum",
+          "label": "Открыть Bombshell Intense Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Подбор по пиону",
+      "paragraphs": [
+        "Для первой пробы выберите карточку по любимому фруктовому оттенку. Затем откройте подбор по пиону и сравните ноты соседних композиций. Удобно сохранить по одному наблюдению о начале и сердце каждого аромата."
+      ],
+      "links": [
+        {
+          "kind": "note",
+          "name": "Пион",
+          "label": "Подбор по ноте «Пион»"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Fragonard — Grenade Pivoine",
+      "url": "https://www.fragonard.com/en-int/grenade-pivoine/grenade-pivoine-p-1306.htm"
+    },
+    {
+      "label": "Victoria’s Secret — Bombshell",
+      "url": "https://www.victoriassecret.com/us/vs/beauty/fragrances-bombshell-shop"
+    },
+    {
+      "label": "Victoria’s Secret — Bombshell Intense",
+      "url": "https://www.victoriassecret.co.uk/style/ls250670/p73689"
+    }
+  ]
+}

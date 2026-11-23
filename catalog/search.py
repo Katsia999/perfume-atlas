@@ -140,21 +140,34 @@ NAME_ALIASES = {
     "belle cherie": ("Бель Шери",),
     "belle de nuit": ("Бель де Нюи",),
     "bleu de chanel": ("Блё де Шанель", "Блю де Шанель"),
+    "bombshell": ("Бомбшел", "Бомбшелл"),
+    "bombshell intense": ("Бомбшел Интенс", "Бомбшелл Интенс"),
     "cedrat": ("Цедрат", "Седра", "Седрат"),
     "cedre gingembre": ("Седр Жанжамбр", "Седр Женжамбр"),
     "chance eau tendre": ("Шанс О Тандр",),
     "coco": ("Коко",),
     "coco mademoiselle": ("Коко Мадемуазель",),
     "diamant": ("Диаман", "Диамант"),
+    "donna born in roma": ("Донна Борн ин Рома",),
+    "donna born in roma intense": ("Донна Борн ин Рома Интенс",),
+    "donna born in roma coral fantasy": ("Донна Борн ин Рома Корал Фэнтези",),
+    "donna born in roma green stravaganza": ("Донна Борн ин Рома Грин Страваганца",),
     "etoile": ("Этуаль",),
     "figue": ("Фиг", "Инжир"),
     "fleur de citronnier": ("Флёр де Ситронье",),
     "fleurs de cerisier": ("Флёр де Серизье",),
+    "flora gorgeous gardenia": ("Флора Горджиос Гардения", "Флора Горджес Гардения", "Горджиос Гардения"),
+    "flora gorgeous jasmine": ("Флора Горджиос Жасмин", "Горджиос Жасмин"),
+    "flora gorgeous magnolia": ("Флора Горджиос Магнолия", "Горджиос Магнолия"),
+    "flora gorgeous orchid": ("Флора Горджиос Орхид", "Горджиос Орхид"),
     "fragonard": ("Фрагонар",),
     "grain de soleil": ("Грен де Солей",),
     "grenade pivoine": ("Гренад Пивуан",),
+    "guilty pour femme": ("Гилти Пур Фам",),
     "habanita": ("Абанита", "Хабанита"),
+    "idole": ("Идоль",),
     "juste un baiser": ("Жюст эн Безе", "Жюст ан Безе"),
+    "libre": ("Либр", "Либре"),
     "mon guerlain": ("Мон Герлен",),
     "moonlight": ("Мунлайт",),
     "neroli orchidee": ("Нероли Орхидея", "Нероли Оркиде"),
@@ -166,9 +179,16 @@ NAME_ALIASES = {
     "rose": ("Роза", "Роз"),
     "santal cardamome": ("Сантал Кардамом",),
     "santal insolent": ("Сантал Энсолан", "Сантал Инсолент"),
+    "tease": ("Тис", "Тиз"),
+    "tease cocoa soiree": ("Тис Какао Суаре", "Тиз Какао Суаре"),
+    "tease creme cloud": ("Тис Крем Клауд", "Тиз Крем Клауд"),
+    "tease glam": ("Тис Глэм", "Тиз Глэм", "Тис Глам", "Тиз Глам"),
+    "tease strawberry bisou": ("Тис Строберри Бизу", "Тиз Строберри Бизу"),
     "terre d hermes": ("Тер д’Эрмес", "Терра д’Эрмес"),
     "terre d hermes eau givree": ("Тер д’Эрмес О Живре", "Терра д’Эрмес О Живре"),
     "twilly d hermes": ("Твилли д’Эрмес", "Твилли Эрмес", "Твилли"),
+    "uomo born in roma coral fantasy": ("Уомо Борн ин Рома Корал Фэнтези",),
+    "uomo born in roma intense": ("Уомо Борн ин Рома Интенс",),
     "un jardin sur le nil": ("Эн Жарден сюр лё Ниль", "Ун Жарден сюр ле Ниль", "Сад на Ниле"),
     "vanille": ("Ваниль",),
     "verveine": ("Вервен", "Вербена"),
@@ -400,8 +420,11 @@ def rank(records, terms, positive, response, kind, preferred, normalize):
 
 def search(query, selected_kind="", *, autocorrect=True):
     records = list(documents())
-    if not query and selected_kind == Material.Kind.ARTICLE:
-        return SearchResponse("", [record for record in records if record.kind == selected_kind])
+    if not query and selected_kind in Material.Kind.values:
+        results = [record for record in records if record.kind == selected_kind]
+        if selected_kind in (Material.Kind.VIDEO, Material.Kind.NEWS):
+            results.sort(key=lambda record: record.entry.published_on or date.min, reverse=True)
+        return SearchResponse("", results)
     entities, known, spelling, cases, note_labels, titles = lexicon(records)
     fixed_vocabulary = (
         set(words(f"{STOP} {FILTER_WORDS} семейство фруктовый фруктовое")) |
@@ -441,23 +464,27 @@ def search(query, selected_kind="", *, autocorrect=True):
     positive = set().union(*(part.matches for part in parts))
     remaining = tuple(
         stem for part in parts for stem in normalize(part.text)
-        if not part.matches or len(words(part.text)) == 1 or any(key[0] != "name" for key in part.matches)
+        if not part.matches or len(words(part.text)) == 1
+        or any(key[0] not in {"name", UNRESTRICTED} for key in part.matches)
     )
     cue_stems = {kind: set(normalize(value)) for kind, value in TYPE_WORDS.items()}
     remaining_set = set(remaining)
     cues = {kind for kind, values in cue_stems.items() if values & remaining_set}
     folded = fold(effective)
+    fresh = FRESH.search(folded)
     month = MONTH.search(folded)
     news_request = NEWS_REQUEST.search(folded)
     response = SearchResponse(effective, [])
     kind = selected_kind
     if kind in ("", Material.Kind.NEWS) and (
-        FRESH.search(folded) or
+        fresh or
         (month and (kind == Material.Kind.NEWS or Material.Kind.NEWS in cues or news_request))
     ):
         kind = Material.Kind.NEWS
         response.until = timezone.localdate()
         response.since = response.until - timedelta(days=29)
+        if fresh:
+            positive.discard(("character", "Свежий"))
 
     ignored = set(normalize(STOP)).union(*cue_stems.values())
     terms = tuple(dict.fromkeys(word for word in remaining if word not in ignored))

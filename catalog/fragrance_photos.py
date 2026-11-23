@@ -28,5 +28,6 @@ def local_bottle_photos(entries):
                 "url": settings.LOCAL_BOTTLE_PHOTO_URL + filename,
                 "width": photo["width"],
                 "height": photo["height"],
+                "credit": photo.get("credit") or f"Фото производителя · {entry.brand.name}",
             }
     return result

@@ -45,7 +45,11 @@
 <section class="home-section" aria-labelledby="journal-heading">
     <div class="section-heading">
         <h2 id="journal-heading">Из журнала</h2>
-        <a href="{% url 'search' %}?kind=article">Все статьи</a>
+        <nav class="journal-links" aria-label="Разделы журнала">
+            <a href="{% url 'search' %}?kind=article">Все статьи</a>
+            <a href="{% url 'search' %}?kind=video">Все видео</a>
+            <a href="{% url 'search' %}?kind=news">Все новости</a>
+        </nav>
     </div>
     <ul class="journal-grid">
         {% for entry in journal %}{% if entry %}

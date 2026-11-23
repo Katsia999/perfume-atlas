@@ -1,0 +1,80 @@
+{
+  "description": "Как гардения звучит рядом с жасмином и коричневым сахаром в Gucci Flora и с грушей и ванилью в Tease.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Гардения",
+    "Груша",
+    "Жасмин",
+    "Ваниль"
+  ],
+  "families": [
+    "Цветочное",
+    "Гурманское"
+  ],
+  "lead": "В Gucci Flora Gorgeous Gardenia и Victoria’s Secret Tease гардения стоит в сердце композиции. Сравним, как соседние ноты меняют впечатление от белых цветов.",
+  "image": {
+    "path": "catalog/images/floral.webp",
+    "alt": "Белые цветки жасмина рядом с розовыми лепестками.",
+    "caption": "Белые цветы служат иллюстрацией к сравнению двух цветочных сердец."
+  },
+  "sections": [
+    {
+      "heading": "Gorgeous Gardenia: цветы и коричневый сахар",
+      "paragraphs": [
+        "Gucci начинает с аккорда цветка груши, мандарина и красных ягод. Гардению дополняют жасмин и франжипани, образуя плотный цветочный букет. В позднем звучании удобно искать землистый оттенок пачули и сладость коричневого сахара."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Gucci",
+          "name": "Flora Gorgeous Gardenia",
+          "version": "Eau de Parfum",
+          "label": "Открыть Flora Gorgeous Gardenia Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Tease: груша и чёрная ваниль",
+      "paragraphs": [
+        "В Tease бренд выделяет грушу анжу, гардению и чёрную ваниль. Здесь образ фрукта возникает перед цветочным сердцем, а сладость уходит в тёплую ванильную сторону. Груша в Tease и цветок груши в Gucci даны как разные ноты."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Tease",
+          "version": "Eau de Parfum",
+          "label": "Открыть Tease Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Как сравнить на блоттерах",
+      "paragraphs": [
+        "Дайте обоим ароматам раскрыться и попробуйте определить, слышите ли вы гардению как отдельный цветок или как часть букета. Затем отметьте, какой оттенок остаётся заметнее в финале: сахар с пачули или ваниль."
+      ],
+      "links": [
+        {
+          "kind": "note",
+          "name": "Гардения",
+          "label": "Подбор по ноте «Гардения»"
+        }
+      ]
+    }
+  ],
+  "video": {
+    "title": "Gucci Flora Fantasy с Майли Сайрус",
+    "description": "В ролике Gucci образ Gorgeous Gardenia передан через яркие цветы и сказочное путешествие.",
+    "source_url": "https://www.youtube.com/watch?v=Xo5-dDUD2do"
+  },
+  "sources": [
+    {
+      "label": "Gucci — Flora Gorgeous Gardenia",
+      "url": "https://www.gucci.com/us/en/pr/beauty/fragrances/fragrances-for-women/gucci-flora-gorgeous-gardenia-100ml-eau-de-parfum-p-667343999990099"
+    },
+    {
+      "label": "Victoria’s Secret — Tease",
+      "url": "https://www.victoriassecret.com/us/vs/beauty/tease"
+    }
+  ]
+}

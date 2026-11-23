@@ -30,7 +30,7 @@
         <figure class="detail-figure">
             {% if photo %}
                 <img class="detail-product-photo" src="{{ photo.url }}" alt="Флакон {{ entry.brand.name }} {{ entry.name }}, {{ entry.version }}" width="{{ photo.width }}" height="{{ photo.height }}">
-                <figcaption>Фото производителя · {{ entry.brand.name }}</figcaption>
+                <figcaption>{{ photo.credit }}</figcaption>
             {% else %}
                 {% static 'catalog/images/'|add:illustration.0 as illustration_url %}
                 <img src="{{ illustration_url }}" alt="{{ illustration.1 }}" width="480" height="320">

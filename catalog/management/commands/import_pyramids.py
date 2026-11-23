@@ -8,11 +8,12 @@ from .import_demo import load_csv, read_date, save_entry
 
 
 def save_pyramid_notes(fragrance, row):
+    note_fields = [(level, level) for level in FragranceNote.Level.values] + [("notes", "")]
     levels = [
         (name.strip(), level)
-        for level in FragranceNote.Level.values
-        if row[level]
-        for name in row[level].split("|")
+        for field, level in note_fields
+        if row.get(field)
+        for name in row[field].split("|")
     ]
     names = {name for name, _ in levels}
     if not names or "" in names or len(names) != len(levels):

@@ -1,0 +1,101 @@
+{
+  "description": "Разбираем Tease, Tease Glam, Crème Cloud, Cocoa Soirée и Strawberry Bisou по цветочным и десертным нотам.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Гардения",
+    "Ваниль",
+    "Меренга",
+    "Какао",
+    "Клубника"
+  ],
+  "families": [
+    "Гурманское",
+    "Цветочно-фруктовое"
+  ],
+  "lead": "Victoria’s Secret по-разному сочетает сладость и цветы в линейке Tease. Груша с гарденией знакомит с оригиналом, а версии добавляют меренгу, какао, клубнику или можжевельник.",
+  "image": {
+    "path": "catalog/images/amber.webp",
+    "alt": "Тёмные стручки ванили и кусочки янтарной смолы.",
+    "caption": "Ваниль — один из ориентиров в нескольких композициях линии Tease."
+  },
+  "sections": [
+    {
+      "heading": "Оригинальная Tease и Tease Glam",
+      "paragraphs": [
+        "У оригинальной парфюмерной воды производитель указывает грушу анжу, белую гардению и чёрную ваниль. Соединение сочного плода, цветка и тёплой сладости даёт первый ориентир для знакомства с линией.",
+        "У лимитированной Tease Glam справочники называют пион, ягоды можжевельника и меренгу. Сравнивайте их как три заявленных ориентира. Подтверждённой разбивки по этапам раскрытия для этой версии у нас нет."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Tease",
+          "version": "Eau de Parfum",
+          "label": "Открыть Tease Eau de Parfum"
+        },
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Tease Glam",
+          "version": "Eau de Parfum",
+          "label": "Открыть Tease Glam Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Crème Cloud и Cocoa Soirée",
+      "paragraphs": [
+        "Crème Cloud открывается ванильной меренгой и развивается через цветок сандала к амбре и мускусу. Cocoa Soirée движется от ягод и фрезии к какао и сливкам шантильи. В первом случае стоит искать воздушно-кремовый оттенок, во втором — шоколадный."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Tease Crème Cloud",
+          "version": "Eau de Parfum",
+          "label": "Открыть Tease Crème Cloud Eau de Parfum"
+        },
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Tease Cocoa Soirée",
+          "version": "Eau de Parfum",
+          "label": "Открыть Tease Cocoa Soirée Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Клубника и маршмеллоу",
+      "paragraphs": [
+        "В Strawberry Bisou открытие построено на клубнике. Ванильная орхидея даёт цветочную часть, а маршмеллоу завершает эту версию мягкой сладостью. Если хочется фруктов и десерта в одном аромате, начните сравнение с неё."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Tease Strawberry Bisou",
+          "version": "Eau de Parfum",
+          "label": "Открыть Tease Strawberry Bisou Eau de Parfum"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Victoria’s Secret — Tease",
+      "url": "https://www.victoriassecret.com/us/vs/beauty/tease"
+    },
+    {
+      "label": "Victoria’s Secret — Tease Glam",
+      "url": "https://www.parfumo.com/Perfumes/Victoria_s_Secret/tease-glam-eau-de-parfum"
+    },
+    {
+      "label": "Victoria’s Secret — Tease Crème Cloud",
+      "url": "https://www.victoriassecret.co.uk/style/ls250670/l94321"
+    },
+    {
+      "label": "Victoria’s Secret — Tease Cocoa Soirée",
+      "url": "https://vspressroom.com/wp-content/uploads/2023/08/victorias-secret-beauty-2022-tease-cocoa-soiree-media-kit-8-24.pdf"
+    }
+  ]
+}

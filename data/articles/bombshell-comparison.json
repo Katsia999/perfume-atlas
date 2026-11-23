@@ -1,0 +1,83 @@
+{
+  "description": "Сравниваем свежую маракуйю и сосну Bombshell с вишней и ванилью Bombshell Intense. В центре обеих композиций — пион.",
+  "verified_on": "2026-11-22",
+  "notes": [
+    "Пион",
+    "Маракуйя",
+    "Вишня",
+    "Ваниль"
+  ],
+  "families": [
+    "Цветочно-фруктовое"
+  ],
+  "lead": "У двух парфюмерных вод Victoria’s Secret есть общий цветочный мотив. У Bombshell пион окружён маракуйей и сосной, у Bombshell Intense — вишней и ванилью.",
+  "image": {
+    "path": "catalog/images/articles/fragrance-testing.webp",
+    "alt": "Прозрачный флакон-пробник и две бумажные полоски на зелёной поверхности.",
+    "caption": "Подпишите два блоттера перед сравнением Bombshell и Bombshell Intense."
+  },
+  "sections": [
+    {
+      "heading": "Bombshell: фруктовая кислинка и хвоя",
+      "paragraphs": [
+        "Официальное описание начинается с маракуйи, за которой следует пион Шангри-Ла. В базе актуальной страницы марки указаны ванильная орхидея и итальянская сосна. Хвоя помогает представить, почему цветочно-фруктовый аромат описывают ещё и как свежий."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Bombshell",
+          "version": "Eau de Parfum",
+          "label": "Открыть Bombshell Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "Bombshell Intense: вишня и красный пион",
+      "paragraphs": [
+        "В композиции Intense бренд выделяет вишню, красный пион и ваниль. Вишня меняет оттенок фруктового начала, а ваниль добавляет позднему звучанию тепла. Оба флакона относятся к концентрации Eau de Parfum."
+      ],
+      "links": [
+        {
+          "kind": "fragrance",
+          "brand": "Victoria’s Secret",
+          "name": "Bombshell Intense",
+          "version": "Eau de Parfum",
+          "label": "Открыть Bombshell Intense Eau de Parfum"
+        }
+      ]
+    },
+    {
+      "heading": "На что обратить внимание",
+      "paragraphs": [
+        "Сначала попробуйте различить маракуйю и вишню. Затем вернитесь к полоскам, чтобы сравнить, какой нотой в каждом случае обрамлён пион. Это даёт понятный ориентир для выбора между версиями."
+      ],
+      "links": [
+        {
+          "kind": "note",
+          "name": "Пион",
+          "label": "Подбор по ноте «Пион»"
+        }
+      ]
+    }
+  ],
+  "video": {
+    "title": "Victoria’s Secret о Bombshell",
+    "description": "Фильм бренда посвящён классической парфюмерной воде Bombshell.",
+    "source_url": "https://www.youtube.com/watch?v=c0RCRkkZnJM"
+  },
+  "sources": [
+    {
+      "label": "Victoria’s Secret — Bombshell",
+      "url": "https://www.victoriassecret.com/us/vs/beauty/fragrances-bombshell-shop"
+    },
+    {
+      "label": "Victoria’s Secret — Bombshell Intense",
+      "url": "https://www.victoriassecret.co.uk/style/ls250670/p73689"
+    },
+    {
+      "label": "Victoria’s Secret — пресс-кит Bombshell Intense",
+      "url": "https://vspressroom.com/wp-content/uploads/2021/04/bombshell-beauty-victorias-secret-2021-media-kit.pdf"
+    }
+  ]
+}

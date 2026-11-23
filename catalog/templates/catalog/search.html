@@ -46,7 +46,7 @@
     {% endif %}
 
     {% if response.results %}
-    <h2 class="results-heading">{% if query %}Результаты{% else %}Все статьи{% endif %} <span class="count">{{ response.results|length }}</span></h2>
+    <h2 class="results-heading">{{ list_title|default:"Результаты" }} <span class="count">{{ response.results|length }}</span></h2>
     <ul class="results">
         {% for result in response.results %}
         <li class="card">

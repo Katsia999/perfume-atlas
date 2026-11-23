@@ -83,7 +83,8 @@ def query_parts(text, normalize, phrases, profiles, exact_phrases):
             fragment = text[tokens[index].start():tokens[index + size - 1].end()]
             normalized = normalize(EXACT_PROFILE_ALIASES.get(fold(fragment), fragment))
             matches = None
-            if len(normalized) == size:
+            # A note alias can share a stem with a preposition, as «безе» does with «без».
+            if len(normalized) == size and (size > 1 or fold(fragment) not in SCOPES):
                 matches = exact_phrases.get(words(fragment)) or phrases.get(normalized)
             if matches:
                 yield QueryPart(fragment, frozenset(matches), profiles.get(normalized, ""))
