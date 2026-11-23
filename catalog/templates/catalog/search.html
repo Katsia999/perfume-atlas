@@ -46,7 +46,13 @@
     {% endif %}
 
     {% if response.results %}
-    <h2 class="results-heading">{{ list_title|default:"Результаты" }} <span class="count">{{ response.results|length }}</span></h2>
+    {% if response.matched_only %}
+    <p class="notice">В описаниях не нашлось близкого совпадения для «{{ response.unknown }}». Ниже показаны ароматы, которые подходят по указанным выше свойствам.</p>
+    {% endif %}
+    {% if response.unsupported_filters %}
+    <p class="notice">По данным каталога нельзя проверить {{ response.unsupported_filters|join:", " }}. Показаны совпадения по остальным пожеланиям.</p>
+    {% endif %}
+    <h2 class="results-heading">{% if response.related %}По вашему описанию{% else %}{{ list_title|default:"Результаты" }}{% endif %} <span class="count">{{ response.results|length }}</span></h2>
     <ul class="results">
         {% for result in response.results %}
         <li class="card">
@@ -58,7 +64,7 @@
                 <a href="{% url 'material-detail' result.entry.pk %}">{{ result.title }}</a>
                 {% endif %}
             </h3>
-            <p>{{ result.entry.description|truncatewords:40 }}</p>
+            <p>{% if result.passage %}{{ result.passage|truncatewords:55 }}{% else %}{{ result.entry.description|truncatewords:40 }}{% endif %}</p>
             {% if result.matches %}<p><strong>Совпало:</strong> {{ result.matches|join:" · " }}</p>{% endif %}
             {% if result.wear_match %}<p><a href="{% url 'fragrance-detail' result.entry.pk %}#when-to-wear">Обоснование подбора<span class="visually-hidden"> для {{ result.title }}</span></a></p>{% endif %}
             <p class="source"><a href="{{ result.entry.source_url }}">Источник<span class="visually-hidden"> для {{ result.title }}</span></a></p>

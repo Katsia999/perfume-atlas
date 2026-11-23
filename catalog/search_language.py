@@ -7,8 +7,8 @@ from django.db import connection
 
 
 WORD = re.compile(r"[^\W_]+")
-RUSSIAN_WORD = re.compile(r"[а-я]{5,}")
-TITLE_WORD = re.compile(r"[а-я]{2,}")
+SPELLING_WORD = re.compile(r"(?:[а-я]{5,}|[a-z]{5,})")
+TITLE_WORD = re.compile(r"(?:[а-я]{2,}|[a-z]{2,})")
 PART = re.compile(r"[^\W_]+|[,.!?;:/()\[\]{}]")
 NEGATIONS = {"без", "не"}
 SCOPES = NEGATIONS | {"с", "со"}
@@ -102,6 +102,7 @@ def conditions(parts, normalize, ignored):
     pending = ""
     has_condition = False
     ambiguous = False
+    incomplete_filter = False
 
     def finish_group():
         nonlocal branches
@@ -125,6 +126,7 @@ def conditions(parts, normalize, ignored):
                         continue
                 if pending and not (pending == "и" and token in SCOPES):
                     unknown.append(pending)
+                    incomplete_filter = True
                 if token in CLAUSE_END or changes_sign:
                     finish_group()
                     has_condition = False
@@ -133,9 +135,12 @@ def conditions(parts, normalize, ignored):
             elif token in {"или", "и"}:
                 if pending or not has_condition:
                     unknown.append(token)
+                    incomplete_filter |= token == "или" or scope in NEGATIONS
                 pending = token
             elif set(normalize(token)) - ignored:
                 unknown.append(part.text)
+                # An unknown exclusion cannot be verified from the catalogue.
+                incomplete_filter |= scope in NEGATIONS
                 pending = ""
             continue
 
@@ -144,6 +149,7 @@ def conditions(parts, normalize, ignored):
         if scope in NEGATIONS:
             if condition.unrestricted:
                 unknown.append(part.text)
+                incomplete_filter = True
             else:
                 excluded.append(condition)
         else:
@@ -155,12 +161,14 @@ def conditions(parts, normalize, ignored):
 
     if pending:
         unknown.append(pending)
+        incomplete_filter = True
     finish_group()
     return (
         tuple(groups),
         tuple(dict.fromkeys(excluded)),
         " ".join(unknown),
         ambiguous,
+        incomplete_filter,
     )
 
 
@@ -295,7 +303,7 @@ def correct_query(text, query_stems, known_stems, spelling, note_cases, titles):
     edits = []
     for match in WORD.finditer(text):
         word = fold(match[0])
-        if not RUSSIAN_WORD.fullmatch(word) or query_stems[word] in known_stems:
+        if not SPELLING_WORD.fullmatch(word) or query_stems[word] in known_stems:
             continue
         candidates = {label for candidate, label in spelling.items() if one_edit(word, candidate)}
         if len(candidates) == 1:

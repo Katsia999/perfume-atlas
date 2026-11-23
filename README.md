@@ -60,6 +60,7 @@ POSTGRES_PORT=5432
 .\.venv\Scripts\python.exe manage.py import_performance
 .\.venv\Scripts\python.exe manage.py import_wear
 .\.venv\Scripts\python.exe manage.py train_intent
+.\.venv\Scripts\python.exe manage.py prepare_semantic_search
 .\.venv\Scripts\python.exe manage.py createsuperuser
 .\.venv\Scripts\python.exe manage.py runserver 127.0.0.1:8000
 ```
@@ -93,6 +94,10 @@ POSTGRES_PORT=5432
 ## Как обучается модель и работает поиск
 
 Команда `train_intent` обучает классификатор на размеченных запросах, выводит Macro‑F1 на отложенной выборке и сохраняет модель в `.local/query-intent.joblib`. Классификатор помогает поднять в выдаче подходящий тип результата. [Размеченные запросы](data/search/queries.csv) · [Команда обучения](catalog/management/commands/train_intent.py)
+
+Для поиска по смыслу при первой установке выполните `manage.py prepare_semantic_search`. Команда скачает около 131 МБ с Hugging Face, сверит SHA-256 и подготовит векторы фрагментов опубликованных записей. Затем сайт обрабатывает запросы на процессоре без подключения к интернету. Для переноса можно скопировать каталог `.local/rubert-mini-frida/`. Пока модель не загружена, поиск использует совпадения слов и проверяемые свойства. [Модель ruBERT-mini-FRIDA](https://huggingface.co/sergeyzh/rubert-mini-frida) · [Версия ONNX](https://huggingface.co/amekhrishvili/rubert-mini-frida-onnx)
+
+Попробуйте «Хочу пахнуть как свежевыстиранные простыни» или «Куда пшикнуть пробник, чтобы понять, брать ли флакон?». Для свободного описания сайт сравнивает вектор запроса с текстами карточек и материалов, учитывает общие слова и показывает до пяти близких записей с подходящими фрагментами. Указанные ноты, исключения и выбранный тип ограничивают подбор. Если к ванили добавить бюджет, выдача объяснит, что в базе нет цен. После правки в админке новые тексты участвуют в ближайшем поиске. [Попробовать поиск](http://127.0.0.1:8000/search/) · [Код сравнения фрагментов](catalog/semantic.py)
 
 ## Как устроен CSV-импорт
 

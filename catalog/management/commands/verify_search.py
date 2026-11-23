@@ -171,7 +171,7 @@ class Command(BaseCommand):
         check("Духи с запахом ванили и цыетов", vanilla_floral,
               contains=("<strong>Духи с запахом ванили и цветов</strong>", "original=1"))
         check("Духи с запахом ванили и цыетов", [], original=1, contains=("цыетов». Уточните",))
-        check("Духи с цветом", [], contains=("цветом». Уточните",))
+        check("Духи с цветом", contains=("По вашему описанию",))
         check("Ищу духи, которые пахнут ванилью и цветами", vanilla_floral)
         check("Я ищу парфюм с нотами ванили и сандала", fragrance_urls(vanilla_sandal))
         check("Порекомендуй духи с древесным звучанием без запаха мускуса", fragrance_urls(
@@ -385,8 +385,9 @@ class Command(BaseCommand):
                     raise CommandError(f"У версии {entry} неверно показано поле {fact.kind}.")
         self.stdout.write(f"Блок «Когда носить» · {fragrances.count()} карточек со ссылками и датами.")
 
+        check("Ищу духи с ванилью до 5000 рублей", fragrance_urls(vanilla),
+              contains=("По данным каталога нельзя проверить цену.", "нота «Ваниль»"))
         for query, label in (
-            ("Ищу духи с ванилью до 5000 рублей", "цену"),
             ("духи держатся 8 часов", "стойкость в часах"),
             ("Духи без запаха", "полное отсутствие запаха"),
         ):
@@ -403,6 +404,8 @@ class Command(BaseCommand):
         if etoile not in RESULT_LINK.findall(bergamot_results):
             raise CommandError("После исправления «бергамт» не найдена карточка Etoile.")
         check("бергамт", [], original=1, contains=("по исходному запросу",))
+        check("Chanle", fragrance_urls(fragrances.filter(brand__name="Chanel")),
+              kind="fragrance", contains=("<strong>Chanel</strong>",))
         check("с ваниль", fragrance_urls(vanilla), contains=("<strong>с ванилью</strong>", "original=1"))
         check("с ваниль", fragrance_urls(vanilla), original=1, contains=("Применить исправления",))
         check("Покажи аромат с ваниль и без мускуса", fragrance_urls(vanilla.exclude(notes__name="Мускус")),
@@ -421,6 +424,28 @@ class Command(BaseCommand):
         check("свежие новости", urls(recent, "material-detail"), kind="news")
         for kind in Material.Kind.values:
             check("", urls(materials.filter(kind=kind), "material-detail"), kind=kind)
+
+        for query, name in (
+            ("Подбери что-нибудь, напоминающее посиделки у костра", "REPLICA By the Fireplace"),
+            ("Хочу пахнуть как свежевыстиранные простыни", "REPLICA Lazy Sunday Morning"),
+            ("Подбери что-то как отпуск на пляже", "REPLICA Beach Walk"),
+            ("Подбери что-нибудь с запахом шоколадного десерта", "Tease Cocoa Soirée"),
+        ):
+            entry = fragrances.get(name=name)
+            check(query, first=reverse("fragrance-detail", args=[entry.pk]), contains=("По вашему описанию",))
+        mixed = check("Хочу посиделки у костра, но без мускуса", contains=("Общий запрет", "По вашему описанию"))
+        if set(RESULT_LINK.findall(mixed)) - set(fragrance_urls(fragrances.exclude(notes__name="Мускус"))):
+            raise CommandError("Подбор по описанию нарушил запрет на мускус.")
+        check("Куда пшикнуть пробник, чтобы понять, брать ли флакон?",
+              first=material_url("Как выбрать парфюм: от блоттера до пробы на коже", "article"),
+              kind="article", contains=("По вашему описанию",))
+        check("Подскажите, как не ошибиться при выборе первого флакона и проверить его на коже?",
+              first=material_url("Как выбрать парфюм: от блоттера до пробы на коже", "article"))
+        check("Подбери духи с ванилью для квадрокоптера", fragrance_urls(vanilla),
+              contains=("В описаниях не нашлось близкого совпадения для «квадрокоптера»",))
+        check("как починить коробку передач", [])
+        check("октаэдр из фанеры", [])
+        check("фывапролдж", [])
 
         note_ids = list(Note.objects.filter(name__in=("Ваниль", "Сандал")).values_list("pk", flat=True))
         selection = RESULT_LINK.findall(read(reverse("selection"), {"note": note_ids}))

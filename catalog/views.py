@@ -16,6 +16,7 @@ from .search import FRAGRANCE, search
 
 EXAMPLES = (
     "бергамот",
+    "Подбери что-нибудь с запахом шоколадного десерта",
     "древесные ароматы",
     "без фруктового аромата",
     "Духи на лето или зиму",
@@ -49,8 +50,8 @@ class SearchForm(forms.Form):
     q = forms.CharField(
         label="Запрос",
         required=False,
-        max_length=240,
-        widget=forms.TextInput(attrs={"placeholder": "Например, аромат с ванилью"}),
+        max_length=1500,
+        widget=forms.TextInput(attrs={"placeholder": "Название, вопрос или описание своими словами"}),
     )
     kind = forms.ChoiceField(
         label="Тип результата",

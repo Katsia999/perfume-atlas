@@ -5,6 +5,7 @@ import re
 
 from django.utils import timezone
 
+from . import semantic
 from .intent import preferred_kind
 from .models import Fragrance, FragrancePerformance, FragranceWear, Material, SEASONS, WearOption
 from .search_language import (
@@ -102,6 +103,12 @@ RECOMMENDATION = re.compile(
     r"\b(?:посоветуй(?:те)?|подбери(?:те)?|предложи(?:те)?|порекомендуй(?:те)?|подскажи(?:те)?|"
     r"ищу|ищем|предпочитаю|предпочитаем|что-нибудь)\b"
 )
+# A negation in the preamble describes the speaker's memory, not a scent to exclude.
+MEMORY_PREAMBLE = re.compile(r"\b(?:я\s+)?не\s+(?:помню|знаю|могу\s+вспомнить)\s+(?:точн\w*\s+)?названи\w*\b", re.I)
+INFORMATION_QUESTION = re.compile(
+    r"^(?:(?:пожалуйста|мне|можешь|можете|подскаж\w*|расскаж\w*|объясн\w*|хочу понять|хочу узнать)[,\s]+)*"
+    r"(?:как\b(?!\s+(?:будто|после))|почему\b|зачем\b|чем отлич\w*|что такое\b|в чем разница\b)"
+)
 UNSUPPORTED_FILTERS = (
     ("стойкость в часах", DURATION_HOURS),
     ("цену", re.compile(r"\b(?:цена|цену|цены|бюджет\w*|недорог\w*|дешев\w*|дороже|рубл\w*)\b|"
@@ -116,11 +123,12 @@ STOP = """
     посоветуй посоветуйте подбери подберите назови назовите предложи предложите
     я можешь можете можно посоветовать подобрать предложить порекомендовать
     порекомендуй порекомендуйте подскажи подскажите ищу ищем предпочитаю предпочитаем
-    что-нибудь какой-нибудь что-то который чтобы есть желательно что ли
+    что-нибудь какой-нибудь что-то который чтобы есть желательно что ли вроде
+    вас вы хотелось люблю нравится напоминать напоминает напоминающий напоминающее
 """
 FILTER_WORDS = """
     нота ноты профиль характер звучание направление бренд марка концентрация версия
-    запах запахом запаха запаху пахнет пахнут пахли
+    запах запахом запаха запаху пахнет пахнут пахли пахнуть
     носить подойдёт подойдут подходит подходят лучше сезон
 """
 TYPE_WORDS = {
@@ -215,6 +223,7 @@ class Result:
     entities: dict
     matches: tuple[str, ...] = ()
     wear_match: bool = False
+    passage: str = ""
 
     @property
     def label(self):
@@ -244,6 +253,8 @@ class SearchResponse:
     missing_wear: bool = False
     unrestricted_filters: tuple[str, ...] = ()
     wear_lookup: bool = False
+    related: bool = False
+    matched_only: bool = False
 
 
 def wear_keys(facts):
@@ -440,7 +451,12 @@ def search(query, selected_kind="", *, autocorrect=True):
         {word for value in TYPE_WORDS.values() for word in words(value)} |
         {word for forms in cases for label in forms for word in words(label)}
     )
-    stems = postgres_stems(known | fixed_vocabulary | set(words(query)))
+    extra_words = {
+        word for record in records if record.kind == FRAGRANCE
+        for fact in (*record.entry.wear.all(), *record.entry.performance.all())
+        for word in words(fact.description)
+    }
+    stems = postgres_stems(known | extra_words | fixed_vocabulary | set(words(query)))
     brand_stems = defaultdict(set)
     for (category, name), variants in entities.items():
         if category == "brand" and len(words(name)) == 1:
@@ -450,7 +466,7 @@ def search(query, selected_kind="", *, autocorrect=True):
     equivalents = {stem: names.pop() for stem, names in brand_stems.items() if len(names) == 1}
 
     def normalize(text):
-        normalized = (stems[TEXT_VARIANTS.get(word, word)] for word in words(text))
+        normalized = (stems.get(TEXT_VARIANTS.get(word, word), word) for word in words(text))
         return tuple(equivalents.get(stem, stem) for stem in normalized)
 
     if autocorrect:
@@ -460,7 +476,8 @@ def search(query, selected_kind="", *, autocorrect=True):
         effective = query
 
     phrases, profiles = phrase_index(entities, cases, note_labels, normalize)
-    parts = list(query_parts(effective, normalize, phrases, profiles, EXACT_WEAR_PHRASES))
+    parsed_text = MEMORY_PREAMBLE.sub("", effective)
+    parts = list(query_parts(parsed_text, normalize, phrases, profiles, EXACT_WEAR_PHRASES))
     positive = set().union(*(part.matches for part in parts))
     remaining = tuple(
         stem for part in parts for stem in normalize(part.text)
@@ -489,8 +506,8 @@ def search(query, selected_kind="", *, autocorrect=True):
     ignored = set(normalize(STOP)).union(*cue_stems.values())
     terms = tuple(dict.fromkeys(word for word in remaining if word not in ignored))
     controls = {fold(part.text) for part in parts if not part.matches}
-    material_intent = kind == Material.Kind.ARTICLE or bool(
-        cues - {FRAGRANCE} or news_request or folded.startswith(("что такое ", "как выбрать ", "почему "))
+    material_intent = kind in Material.Kind.values or bool(
+        cues - {FRAGRANCE} or news_request or INFORMATION_QUESTION.search(folded)
     )
     wear_question = WEAR_QUESTION.search(folded)
     if wear_question and not material_intent and kind in ("", FRAGRANCE):
@@ -515,20 +532,30 @@ def search(query, selected_kind="", *, autocorrect=True):
     if not material_intent and (filter_terms or positive or FRAGRANCE in cues or kind == FRAGRANCE):
         response.unsupported_filters = tuple(label for label, pattern in UNSUPPORTED_FILTERS if pattern.search(folded))
         if response.unsupported_filters:
-            return response
+            if not positive or "полное отсутствие запаха" in response.unsupported_filters:
+                return response
+            # Keep independently verifiable preferences when a price or duration is missing.
+            remainder = fold(parsed_text)
+            for _, pattern in UNSUPPORTED_FILTERS:
+                remainder = pattern.sub(" ", remainder)
+            parts = list(query_parts(remainder, normalize, phrases, profiles, EXACT_WEAR_PHRASES))
 
-    if kind != Material.Kind.ARTICLE and (controls & NEGATIONS or (filter_terms and not material_intent)):
-        if controls & BRACKETS:
+    condition_fillers = ignored | set(normalize(FILTER_WORDS))
+    if not material_intent and (controls & NEGATIONS or filter_terms or response.unsupported_filters):
+        if controls & BRACKETS and controls & ALTERNATIVE_LINKS:
             response.unsupported_brackets = True
             return response
-        if "/" in controls:
+        if "/" in controls and positive:
             response.unsupported_slash = True
             return response
-        condition_fillers = ignored | set(normalize(FILTER_WORDS))
         if response.wear_lookup:
             condition_fillers.update(normalize(wear_question[0]))
-        groups, excluded, response.unknown, response.ambiguous_alternative = conditions(parts, normalize, condition_fillers)
-        if response.unknown or response.ambiguous_alternative:
+        groups, excluded, response.unknown, response.ambiguous_alternative, incomplete = conditions(
+            parts, normalize, condition_fillers
+        )
+        if response.ambiguous_alternative or (response.unknown and (
+            incomplete or controls & ALTERNATIVE_LINKS or not autocorrect
+        )):
             return response
         if unrestricted:
             groups = tuple(
@@ -553,8 +580,23 @@ def search(query, selected_kind="", *, autocorrect=True):
         response.incompatible_kind = kind not in ("", FRAGRANCE)
         if response.contradiction or response.incompatible_kind:
             return response
-        if groups or excluded or unrestricted:
-            response.results = rank(records, (), set(), response, FRAGRANCE, "", normalize)
+        if response.unsupported_filters and not (groups or excluded):
+            return response
+        if groups or excluded or unrestricted or response.unknown or FRAGRANCE in cues or recommendation:
+            # «Ищу» alone can introduce either a fragrance description or a request for an article.
+            fragrance_request = groups or excluded or unrestricted or FRAGRANCE in cues or (
+                recommendation and recommendation[0].startswith(("подбер", "порекоменду", "посовету", "предлож", "предпочит"))
+            )
+            candidate_kind = kind or (FRAGRANCE if fragrance_request else "")
+            candidates = rank(records, (), set(), response, candidate_kind, "", normalize)
+            if response.unknown:
+                response.results = semantic.retrieve(response.unknown, candidates, normalize, condition_fillers)
+                response.related = bool(response.results)
+                if not response.results and groups and candidates:
+                    response.results = candidates
+                    response.matched_only = True
+            else:
+                response.results = candidates
             if not response.results:
                 missing = set().union(*(
                     (requested & SOURCED_FILTERS) - {category for category, _ in record.entities}
@@ -575,4 +617,17 @@ def search(query, selected_kind="", *, autocorrect=True):
         return response
     preferred = "" if kind else (preferred_kind(effective) or hinted)
     response.results = rank(records, terms, positive, response, kind, preferred, normalize)
+    free_parts = {part.text for part in parts
+                  if not part.matches and set(normalize(part.text)) - condition_fillers}
+    free_terms = set(normalize(" ".join(free_parts)))
+    # Exact names, filters and complete keyword matches keep their normal result ordering.
+    if free_terms and autocorrect and not any(
+        free_terms.issubset(normalize(f"{record.title} {record.text}")) for record in response.results
+    ):
+        candidate_kind = kind or hinted
+        candidates = rank(records, (), set(), response, candidate_kind, preferred, normalize)
+        focus = " ".join(part.text for part in parts if part.matches or part.text in free_parts)
+        related = semantic.retrieve(focus, candidates, normalize, condition_fillers)
+        response.results = related
+        response.related = bool(related)
     return response
